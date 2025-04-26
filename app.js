@@ -1150,7 +1150,7 @@ app.get("/driver/home", requireDriverLogin, async (req, res) => {
       return res.render("errors/appError.ejs", { error: "Driver not found." });
     }
 
-    res.render("Driver/driverPage", { driver });
+    res.render("driver/driverPage", { driver });
   } catch (error) {
     console.error("Error loading driver home:", error);
     res.render("errors/appError.ejs", { error: "Unable to load driver home page." });
