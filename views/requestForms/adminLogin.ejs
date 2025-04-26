@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            padding: 40px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .login-container h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .login-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-group input:focus {
+            border-color: #6e8efb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(110, 142, 251, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .founder-title {
+            font-size: 14px;
+            color: #6e8efb;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .fas.fa-map-marked-alt {
+            font-size: 48px;
+            color: #6e8efb;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .input-error {
+            border-color: #e74c3c !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <i class="fas fa-map-marked-alt"></i>
+        <div class="founder-title">Secure Access</div>
+        <h2>Founder Login</h2>
+        <form method="POST" action="/adminLogin" id="loginForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+                <p class="error-message" id="username-error">Username must be at least 10-15 characters, no spaces or special characters</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <p class="error-message" id="email-error">Email must be QuickExplore Team Email and no spaces</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <p class="error-message" id="password-error">Password must be at least 10-25 characters, no spaces</p>
+            </div>
+            
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.style.display = 'none';
+            });
+            
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('input-error');
+            });
+            
+            // Username validation (10-15 chars, no spaces, no special characters)
+            const usernameRegex = /^[a-zA-Z0-9]{10,15}$/;
+            if (!usernameRegex.test(username)) {
+                document.getElementById('username-error').style.display = 'block';
+                document.getElementById('username').classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Email validation - must be MAA@Quickexplore.com and no spaces
+            if (email.toLowerCase() !== 'maa@quickexplore.com' || email.includes(' ')) {
+                document.getElementById('email-error').style.display = 'block';
+                document.getElementById('email').classList.add('input-error');
+                isValid = false;
+            }
+            
+            // Password validation (10-25 chars, no spaces)
+            if (password.length < 10 || password.length > 25 || password.includes(' ')) {
+                document.getElementById('password-error').style.display = 'block';
+                document.getElementById('password').classList.add('input-error');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+    </script>
+</body>
+</html>

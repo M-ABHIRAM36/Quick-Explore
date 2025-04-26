@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Profile - Quick Explore</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --light-gray: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --form-bg: #ffffff;
+            --accent-color: #7952b3;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            font-family: 'Poppins', sans-serif;
+            padding-top: 70px;
+            background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+        }
+        
+        .navbar {
+            background: var(--secondary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+        }
+        
+        .nav-link.active {
+            color: white !important;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"><path fill="none" stroke="white" stroke-width="1" d="M20,20 L80,80 M0,40 L40,0 M60,0 L0,60 M80,20 L20,80" stroke-opacity="0.1"/></svg>');
+            background-size: 40px;
+            opacity: 0.3;
+        }
+        
+        .profile-card {
+            background: var(--form-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .profile-header {
+            background: linear-gradient(to right, var(--accent-color), #4a4a8a);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            border: none;
+            position: relative;
+        }
+        
+        .profile-header::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 10px;
+            background: var(--accent-color);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        }
+        
+        .profile-info {
+            padding: 2rem;
+            background: var(--form-bg);
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .info-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 0.2rem;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .password-form {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .password-form::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+        }
+        
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            height: 58px;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(121, 82, 179, 0.25);
+            border-color: var(--accent-color);
+        }
+        
+        .form-floating label {
+            padding: 1rem;
+        }
+        
+        .btn-update {
+            background: linear-gradient(to right, var(--accent-color), #4a4a8a);
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(121, 82, 179, 0.3);
+            width: 100%;
+        }
+        
+        .btn-update:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(121, 82, 179, 0.5);
+            color: white;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+        
+        .back-link i {
+            margin-right: 0.5rem;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .password-strength {
+            margin-top: 10px;
+        }
+        
+        .progress {
+            height: 6px;
+            border-radius: 4px;
+        }
+        
+        .password-requirements small {
+            color: #6c757d;
+        }
+        
+        .password-requirements i {
+            margin-right: 5px;
+        }
+        
+        .password-requirements .text-success {
+            color: #28a745 !important;
+        }
+        
+        .password-requirements .text-muted {
+            color: #adb5bd !important;
+        }
+        
+        .form-floating .invalid-feedback {
+            margin-top: 0.25rem;
+        }
+        
+        .btn-update:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/places2">
+                <i class="fas fa-map-marked-alt me-2"></i> Quick Explore
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/places2"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/driver/home"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/driver/customer-details"><i class="fas fa-users me-1"></i> Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-user me-1"></i> Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header animate__animated animate__fadeIn">
+            <h1 class="display-5 mb-2"><i class="fas fa-user-circle me-3"></i>Driver Profile</h1>
+            <p class="lead">View and update your profile information</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-5 mb-4">
+                <div class="profile-card animate__animated animate__fadeInLeft">
+                    <div class="profile-header">
+                        <h4 class="m-0"><i class="fas fa-id-card me-2"></i>Personal Details</h4>
+                    </div>
+                    <div class="profile-info">
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Username</div>
+                                <div class="info-value"><%= driver.username %></div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Email Address</div>
+                                <div class="info-value"><%= driver.email %></div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Phone Number</div>
+                                <div class="info-value"><%= driver.phone %></div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-content">
+                                <div class="info-label">Place</div>
+                                <div class="info-value"><%= driver.place %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-7">
+                <div class="profile-card animate__animated animate__fadeInRight">
+                    <div class="profile-header">
+                        <h4 class="m-0"><i class="fas fa-key me-2"></i>Update Password</h4>
+                    </div>
+                    
+                    <div class="password-form">
+                        <% if (error) { %>
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle me-2"></i><%= error %>
+                            </div>
+                        <% } %>
+                        <% if (success) { %>
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i><%= success %>
+                            </div>
+                        <% } %>
+                        
+                        <form method="POST" action="/driver/profile" id="passwordUpdateForm" novalidate>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="New Password" required minlength="8" maxlength="10">
+                                <label for="newPassword"><i class="fas fa-lock me-2"></i>New Password</label>
+                                <div class="invalid-feedback">
+                                    Password must be 8-10 characters long
+                                </div>
+                            </div>
+                            
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required maxlength="10">
+                                <label for="confirmPassword"><i class="fas fa-lock-open me-2"></i>Confirm Password</label>
+                                <div class="invalid-feedback">
+                                    Passwords do not match
+                                </div>
+                            </div>
+                            
+                            <div class="password-strength mb-3">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small class="strength-text mt-1">Password strength: Too weak</small>
+                            </div>
+                            
+                            <div class="password-requirements mb-3">
+                                <small class="d-block mb-1"><i class="fas fa-check-circle req-length"></i> Between 8-10 characters</small>
+                                <small class="d-block mb-1"><i class="fas fa-check-circle req-uppercase"></i> At least one uppercase letter</small>
+                                <small class="d-block mb-1"><i class="fas fa-check-circle req-lowercase"></i> At least one lowercase letter</small>
+                                <small class="d-block mb-1"><i class="fas fa-check-circle req-number"></i> At least one number</small>
+                                <small class="d-block"><i class="fas fa-check-circle req-special"></i> At least one special character</small>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-update" id="updatePasswordBtn" disabled>
+                                <i class="fas fa-sync-alt me-2"></i>Update Password
+                            </button>
+                        </form>
+                        
+                        <a href="/driver/home" class="back-link">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Animation script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation on scroll
+            const animateElements = document.querySelectorAll('.animate__animated');
+            animateElements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.animationDelay = (index * 0.1) + 's';
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => {
+                                entry.target.style.opacity = '1';
+                            }, index * 100);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(element);
+            });
+            
+            const passwordForm = document.getElementById('passwordUpdateForm');
+            const newPassword = document.getElementById('newPassword');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const progressBar = document.querySelector('.progress-bar');
+            const strengthText = document.querySelector('.strength-text');
+            const updatePasswordBtn = document.getElementById('updatePasswordBtn');
+            
+            // Password requirement icons
+            const reqLength = document.querySelector('.req-length');
+            const reqUppercase = document.querySelector('.req-uppercase');
+            const reqLowercase = document.querySelector('.req-lowercase');
+            const reqNumber = document.querySelector('.req-number');
+            const reqSpecial = document.querySelector('.req-special');
+            
+            // Set initial state for requirement icons
+            const requirementIcons = [reqLength, reqUppercase, reqLowercase, reqNumber, reqSpecial];
+            requirementIcons.forEach(icon => {
+                icon.classList.remove('text-success');
+                icon.classList.add('text-muted');
+            });
+            
+            // Check password strength
+            newPassword.addEventListener('input', function() {
+                const password = newPassword.value;
+                
+                // Check requirements
+                const validLength = password.length >= 8 && password.length <= 10;
+                const hasUppercase = /[A-Z]/.test(password);
+                const hasLowercase = /[a-z]/.test(password);
+                const hasNumber = /[0-9]/.test(password);
+                const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+                
+                // Update requirement icons
+                toggleRequirement(reqLength, validLength);
+                toggleRequirement(reqUppercase, hasUppercase);
+                toggleRequirement(reqLowercase, hasLowercase);
+                toggleRequirement(reqNumber, hasNumber);
+                toggleRequirement(reqSpecial, hasSpecial);
+                
+                // Calculate strength score (0-100)
+                let strengthScore = 0;
+                if (validLength) strengthScore += 20;
+                if (hasUppercase) strengthScore += 20;
+                if (hasLowercase) strengthScore += 20;
+                if (hasNumber) strengthScore += 20;
+                if (hasSpecial) strengthScore += 20;
+                
+                // Update progress bar
+                progressBar.style.width = strengthScore + '%';
+                progressBar.setAttribute('aria-valuenow', strengthScore);
+                
+                // Update colors based on strength
+                if (strengthScore < 40) {
+                    progressBar.className = 'progress-bar bg-danger';
+                    strengthText.textContent = 'Password strength: Too weak';
+                    strengthText.className = 'strength-text mt-1 text-danger';
+                } else if (strengthScore < 60) {
+                    progressBar.className = 'progress-bar bg-warning';
+                    strengthText.textContent = 'Password strength: Weak';
+                    strengthText.className = 'strength-text mt-1 text-warning';
+                } else if (strengthScore < 80) {
+                    progressBar.className = 'progress-bar bg-info';
+                    strengthText.textContent = 'Password strength: Medium';
+                    strengthText.className = 'strength-text mt-1 text-info';
+                } else {
+                    progressBar.className = 'progress-bar bg-success';
+                    strengthText.textContent = 'Password strength: Strong';
+                    strengthText.className = 'strength-text mt-1 text-success';
+                }
+                
+                // Show warning if password is too long
+                if (password.length > 10) {
+                    newPassword.classList.add('is-invalid');
+                } else {
+                    // Only remove invalid class if we're not showing another error
+                    if (newPassword.classList.contains('is-invalid') && password.length >= 8) {
+                        newPassword.classList.remove('is-invalid');
+                    }
+                }
+                
+                // Also check if passwords match
+                validatePasswords();
+            });
+            
+            // Compare passwords when confirm password changes
+            confirmPassword.addEventListener('input', validatePasswords);
+            
+            // Function to update requirement icons
+            function toggleRequirement(element, isValid) {
+                if (isValid) {
+                    element.classList.remove('text-muted');
+                    element.classList.add('text-success');
+                } else {
+                    element.classList.remove('text-success');
+                    element.classList.add('text-muted');
+                }
+            }
+            
+            // Function to validate both passwords
+            function validatePasswords() {
+                const password = newPassword.value;
+                const confPassword = confirmPassword.value;
+                
+                // Check if passwords match
+                if (confPassword.length > 0) {
+                    if (password === confPassword) {
+                        confirmPassword.classList.remove('is-invalid');
+                        confirmPassword.classList.add('is-valid');
+                    } else {
+                        confirmPassword.classList.remove('is-valid');
+                        confirmPassword.classList.add('is-invalid');
+                    }
+                }
+                
+                // Enable/disable submit button based on validation
+                const isPasswordValid = password.length >= 8 && 
+                                       password.length <= 10 &&
+                                       /[A-Z]/.test(password) && 
+                                       /[a-z]/.test(password) && 
+                                       /[0-9]/.test(password) && 
+                                       /[!@#$%^&*(),.?":{}|<>]/.test(password);
+                const passwordsMatch = password === confPassword && confPassword.length > 0;
+                
+                updatePasswordBtn.disabled = !(isPasswordValid && passwordsMatch);
+            }
+            
+            // Form submission validation
+            passwordForm.addEventListener('submit', function(event) {
+                // Prevent form submission if validation fails
+                if (!validateForm()) {
+                    event.preventDefault();
+                }
+            });
+            
+            function validateForm() {
+                const password = newPassword.value;
+                const confPassword = confirmPassword.value;
+                
+                let isValid = true;
+                
+                // Validate password length
+                if (password.length < 8 || password.length > 10) {
+                    newPassword.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    newPassword.classList.remove('is-invalid');
+                }
+                
+                // Validate password match
+                if (password !== confPassword) {
+                    confirmPassword.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    confirmPassword.classList.remove('is-invalid');
+                }
+                
+                return isValid;
+            }
+        });
+    </script>
+</body>
+</html>
+

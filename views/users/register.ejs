@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Quick Explore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #8f94fb;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e5ec' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar {
+            background: var(--gradient-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.7rem 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: white;
+            margin-left: 5rem;
+            margin-top: 1rem;
+
+        }
+        
+        .navbar-brand i {
+            margin-right: 8px;
+        }
+        
+        .btn-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 8px 16px;
+            font-size: 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 1010;
+            backdrop-filter: blur(5px);
+
+        }
+        
+        .btn-home:hover {
+            transform: translateX(-5px);
+            background-color: white;
+            color: var(--primary-color);
+            border-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-home i {
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-home:hover i {
+            transform: translateX(-5px);
+        }
+        
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 0;
+            margin: 2rem auto;
+        }
+        
+        .register-header {
+            background: var(--gradient-bg);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+
+        }
+        
+        .register-header::before {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+        
+        .register-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .register-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #e0e0e0;
+            border-radius: 0;
+            padding: 0.6rem 0.6rem 0.6rem 2.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--primary-color);
+            background-color: white;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-icon {
+            position: absolute;
+            left: 0.7rem;
+            top: 38px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .btn-register {
+            background: var(--gradient-bg);
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 84, 200, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            margin-top: 1rem;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(78, 84, 200, 0.6);
+        }
+        
+        .register-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+        
+        .register-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .register-footer a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand animate__animated animate__fadeIn" href="/">
+                <i class="fas fa-map-marked-alt"></i> Quick Explore
+            </a>
+        </div>
+    </nav>
+    <br><br><br><br><br>
+    <!-- Home Button -->
+    <a href="/places2" class="btn-home animate__animated animate__fadeInLeft">
+        <i class="fas fa-home"></i> Home
+    </a>
+
+    <div class="container">
+        <div class="register-container animate__animated animate__fadeIn">
+            <div class="register-header">
+                <i class="fas fa-user-plus register-icon animate__animated animate__pulse animate__infinite animate__slow"></i>
+                <h2 class="mb-2">Create Account</h2>
+                <p class="mb-0">Join Quick Explore to discover amazing destinations</p>
+            </div>
+            
+            <div class="register-form animate__animated animate__fadeInUp">
+                <form action="/register" method="POST" id="registerForm">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <i class="fas fa-user form-icon"></i>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Choose a username (5-15 characters, letters and hyphens only)" required>
+                        <small id="usernameError" class="form-text text-danger"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <i class="fas fa-envelope form-icon"></i>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email address" required>
+                        <small id="emailError" class="form-text text-danger"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <i class="fas fa-lock form-icon"></i>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Create a password" required>
+                        <div class="password-strength mt-1">
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small class="text-muted">Password strength: <span id="strength-text">Weak</span></small>
+                        </div>
+                        <small id="passwordError" class="form-text text-danger"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <i class="fas fa-phone form-icon"></i>
+                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number (10 digits)" required>
+                        <small class="form-text text-muted">Format: 10 digits (e.g., 9876543210)</small>
+                        <small id="phoneError" class="form-text text-danger"></small>
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" class="btn btn-register w-100 animate__animated animate__pulse" disabled>
+                        <i class="fas fa-user-plus me-2"></i> Create Account
+                    </button>
+                </form>
+                
+                <div class="register-footer">
+                    <p>Already have an account? <a href="/login" class="animate__animated animate__pulse">Sign in here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add floating effect to register container
+            const registerContainer = document.querySelector('.register-container');
+            
+            window.addEventListener('mousemove', function(e) {
+                const x = (window.innerWidth / 2 - e.pageX) / 60;
+                const y = (window.innerHeight / 2 - e.pageY) / 60;
+                
+                registerContainer.style.transform = `translateX(${x}px) translateY(${y}px)`;
+            });
+            
+            // Focus animation for form fields
+            const formControls = document.querySelectorAll('.form-control');
+            
+            formControls.forEach(control => {
+                control.addEventListener('focus', function() {
+                    this.parentElement.querySelector('.form-icon').classList.add('animate__animated', 'animate__bounce');
+                });
+                
+                control.addEventListener('blur', function() {
+                    this.parentElement.querySelector('.form-icon').classList.remove('animate__animated', 'animate__bounce');
+                });
+            });
+
+            // Form validation
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const phoneInput = document.getElementById('phone');
+            const usernameError = document.getElementById('usernameError');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const phoneError = document.getElementById('phoneError');
+            const submitBtn = document.getElementById('submitBtn');
+            const registerForm = document.getElementById('registerForm');
+
+            // Validation flags
+            let isUsernameValid = false;
+            let isEmailValid = false;
+            let isPasswordValid = false;
+            let isPhoneValid = false;
+
+            // Username validation
+            usernameInput.addEventListener('input', validateUsername);
+            
+            function validateUsername() {
+                const username = usernameInput.value.trim();
+                const usernameRegex = /^[a-zA-Z-]{5,15}$/;
+                
+                if (!username) {
+                    usernameError.textContent = 'Username is required';
+                    isUsernameValid = false;
+                } else if (!usernameRegex.test(username)) {
+                    usernameError.textContent = 'Username must be 5-15 characters and contain only letters and hyphens';
+                    isUsernameValid = false;
+                } else {
+                    usernameError.textContent = '';
+                    isUsernameValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+
+            // Email validation - only allow gmail accounts
+            emailInput.addEventListener('input', validateEmail);
+            
+            function validateEmail() {
+                const email = emailInput.value.trim();
+                const gmailRegex = /^[\w.+-]+@gmail\.com$/;
+                
+                if (!email) {
+                    emailError.textContent = 'Email is required';
+                    isEmailValid = false;
+                } else if (!gmailRegex.test(email)) {
+                    emailError.textContent = 'Only Gmail accounts are allowed';
+                    isEmailValid = false;
+                } else {
+                    emailError.textContent = '';
+                    isEmailValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+
+            // Password validation with strength meter
+            passwordInput.addEventListener('input', validatePassword);
+            
+            function validatePassword() {
+                const password = passwordInput.value;
+                const errors = [];
+                const progressBar = document.querySelector('.progress-bar');
+                const strengthText = document.getElementById('strength-text');
+                
+                // Calculate password strength
+                let strength = 0;
+                
+                if (password.length >= 8) strength += 20;
+                if (password.length <= 10) strength += 10;
+                if (/[a-z]/.test(password)) strength += 15;
+                if (/[A-Z]/.test(password)) strength += 15;
+                if (/[0-9]/.test(password)) strength += 15;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 15;
+                if (!/\s/.test(password)) strength += 10;
+                
+                // Update progress bar
+                progressBar.style.width = strength + '%';
+                
+                // Update color based on strength
+                if (strength < 40) {
+                    progressBar.className = 'progress-bar bg-danger';
+                    strengthText.textContent = 'Weak';
+                } else if (strength < 70) {
+                    progressBar.className = 'progress-bar bg-warning';
+                    strengthText.textContent = 'Medium';
+                } else {
+                    progressBar.className = 'progress-bar bg-success';
+                    strengthText.textContent = 'Strong';
+                }
+                
+                // Validation checks
+                if (password.length < 8 || password.length > 10) {
+                    errors.push('Password must be 8-10 characters long');
+                }
+                
+                if (!/[a-z]/.test(password)) {
+                    errors.push('Must contain lowercase letter');
+                }
+                
+                if (!/[A-Z]/.test(password)) {
+                    errors.push('Must contain uppercase letter');
+                }
+                
+                if (!/[0-9]/.test(password)) {
+                    errors.push('Must contain a number');
+                }
+                
+                if (!/[^A-Za-z0-9]/.test(password)) {
+                    errors.push('Must contain a special character');
+                }
+                
+                if (/\s/.test(password)) {
+                    errors.push('No spaces allowed');
+                }
+                
+                if (errors.length > 0) {
+                    passwordError.textContent = errors.join(', ');
+                    isPasswordValid = false;
+                } else {
+                    passwordError.textContent = '';
+                    isPasswordValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+
+            // Phone number validation (Indian numbers only)
+            phoneInput.addEventListener('input', validatePhone);
+            
+            function validatePhone() {
+                const phone = phoneInput.value.trim();
+                const indianPhoneRegex = /^[6-9]\d{9}$/;
+                
+                if (!phone) {
+                    phoneError.textContent = 'Phone number is required';
+                    isPhoneValid = false;
+                } else if (!indianPhoneRegex.test(phone)) {
+                    phoneError.textContent = 'Please enter a valid Indian phone number (10 digits starting with 6-9)';
+                    isPhoneValid = false;
+                } else {
+                    phoneError.textContent = '';
+                    isPhoneValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+
+            // Toggle submit button based on validation
+            function toggleSubmitButton() {
+                submitBtn.disabled = !(isUsernameValid && isEmailValid && isPasswordValid && isPhoneValid);
+            }
+
+            // Validate on form submission
+            registerForm.addEventListener('submit', function(e) {
+                validateUsername();
+                validateEmail();
+                validatePassword();
+                validatePhone();
+                
+                if (!(isUsernameValid && isEmailValid && isPasswordValid && isPhoneValid)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

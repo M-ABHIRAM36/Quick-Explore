@@ -1,0 +1,530 @@
+<%- include("../includes/navbar.ejs") %>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  :root {
+        --primary-color: #4e54c8;
+        --secondary-color: #8f94fb;
+        --accent-color: #ff6b6b;
+        --success-color: #20bf6b;
+        --warning-color: #f7b731;
+        --danger-color: #eb4d4b;
+        --text-color: #333;
+        --light-bg: #f8f9fa;
+        --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        --border-radius: 15px;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e5ec' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    color: var(--text-color);
+  }
+
+  .page-header {
+    background: var(--gradient-bg);
+    padding: 2.5rem 0;
+    border-radius: var(--border-radius);
+    margin: 2rem 0;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(78, 84, 200, 0.2);
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .booking-card {
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+    border: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .booking-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header {
+    background: var(--gradient-bg);
+    color: white;
+    padding: 1.2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border: none;
+  }
+
+  .card-header h5 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.25rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  .card-body {
+    padding: 1.8rem;
+  }
+
+  .booking-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding-bottom: 0.8rem;
+  }
+
+  .vehicle-type {
+    display: inline-block;
+    background: rgba(78, 84, 200, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+  }
+
+  .info-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-item {
+    flex: 1 0 45%;
+    min-width: 200px;
+  }
+
+  .info-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 0.3rem;
+  }
+
+  .info-label i {
+    color: var(--primary-color);
+    width: 20px;
+  }
+
+  .info-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .booking-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .booking-status.booked {
+    background-color: rgba(32, 191, 107, 0.15);
+    color: var(--success-color);
+  }
+
+  .booking-status.ongoing {
+    background-color: rgba(247, 183, 49, 0.15);
+    color: var(--warning-color);
+  }
+
+  .booking-status.cancelled {
+    background-color: rgba(235, 77, 75, 0.15);
+    color: var(--danger-color);
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.05));
+    margin: 1.5rem 0;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title i {
+    font-size: 1.1rem;
+  }
+
+  .btn-custom {
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .btn-danger, .btn-cancel {
+    background: linear-gradient(135deg, #ff6b6b, #ee5253);
+    color: white;
+  }
+
+  .btn-danger:hover, .btn-cancel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(235, 77, 75, 0.4);
+    color: white;
+  }
+
+  .btn-warning, .btn-extend {
+    background: linear-gradient(135deg, #f7b731, #fa8231);
+    color: white;
+  }
+
+  .btn-warning:hover, .btn-extend:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(247, 183, 49, 0.4);
+    color: white;
+  }
+
+  .btn-primary, .btn-find {
+    background: var(--gradient-bg);
+    color: white;
+    box-shadow: 0 4px 15px rgba(78, 84, 200, 0.3);
+  }
+
+  .btn-primary:hover, .btn-find:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(78, 84, 200, 0.5);
+    color: white;
+  }
+
+  .form-control {
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.2);
+  }
+
+  .driver-info {
+    background-color: rgba(78, 84, 200, 0.05);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .extension-form {
+    margin-top: 1.5rem;
+    background-color: rgba(78, 84, 200, 0.05);
+    border-radius: 12px;
+    padding: 1.2rem;
+  }
+
+  .card-img-container {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-img-top {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.5s;
+  }
+
+  .booking-card:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .destination-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-top: 2rem;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .empty-state i {
+    font-size: 5rem;
+    color: #d1d8e0;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .animate-in {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .info-item {
+      flex: 1 1 100%;
+    }
+    
+    .extension-form {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .days-input {
+      margin: 0;
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="page-header animate__animated animate__fadeIn">
+    <h1 class="display-5 mb-2"><i class="fas fa-car me-3"></i>My Vehicle Bookings</h1>
+    <p class="lead">Manage and track all your vehicle reservations</p>
+  </div>
+  
+  <div class="container mt-3">
+    <a href="/places2" class="btn btn-custom btn-find animate__animated animate__fadeInLeft">
+      <i class="fas fa-search me-2"></i> Find a new vehicle
+    </a>
+  </div>
+
+  <% if (bookings.length === 0) { %>
+    <div class="empty-state animate__animated animate__fadeIn">
+      <i class="fas fa-car-side animate__animated animate__pulse animate__infinite animate__slow"></i>
+      <h4 class="mt-4 text-muted">You haven't planned a trip yet</h4>
+      <p class="text-muted">Start your adventure by booking a vehicle for your next destination!</p>
+      <a href="/places2" class="btn btn-custom btn-find mt-4">
+        <i class="fas fa-search me-2"></i> Find a vehicle to book
+      </a>
+    </div>
+  <% } else { %>
+    <div class="row mt-4">
+      <% 
+      bookings.forEach((booking, index) => { 
+        let bookingTime = new Date(booking.createdAt).getTime();
+        let currentTime = new Date().getTime();
+        let timeDifference = (currentTime - bookingTime) / (1000 * 60); // in minutes
+        let animationDelay = 0.2 + (index * 0.1);
+      %>
+        <div class="col-lg-6 animate__animated animate__fadeInUp" style="--animate-delay: <%= index * 0.1 %>s">
+          <div class="booking-card">
+            <div class="card-header">
+              <h5 class="mb-0"><i class="fas fa-car me-2"></i>Booking #<%= booking._id.toString().substring(0, 8) %></h5>
+            </div>
+            
+            <% if (booking.image) { %>
+              <div class="card-img-container">
+                <img src="<%= booking.image %>" class="card-img-top" alt="<%= booking.vehicle?.brand || 'Vehicle' %>">
+                <span class="destination-badge">
+                  <i class="fas fa-map-marker-alt me-1"></i> <%= booking.place %>
+                </span>
+              </div>
+            <% } %>
+            
+            <div class="card-body">
+              <!-- Vehicle Info -->
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="booking-title">
+                  <%= booking.vehicle?.brand || "Unknown Brand" %> 
+                  <%= booking.vehicle?.model || "" %>
+                </h4>
+                
+                <!-- Status Badge -->
+                <% if (booking.vehicleStatus === "Cancelled") { %>
+                  <div class="booking-status cancelled">
+                    <i class="fas fa-times-circle me-1"></i> Cancelled
+                  </div>
+                <% } else if (booking.vehicleStatus === "Booked") { %>
+                  <div class="booking-status booked">
+                    <i class="fas fa-check-circle me-1"></i> Booked
+                  </div>
+                <% } else { %>
+                  <div class="booking-status">
+                    <%= booking.vehicleStatus %>
+                  </div>
+                <% } %>
+              </div>
+              
+              <% if (booking.vehicle?.vehicleType) { %>
+                <span class="vehicle-type">
+                  <i class="fas fa-car me-2"></i><%= booking.vehicle.vehicleType %>
+                </span>
+              <% } %>
+              
+              <!-- Details -->
+              <div class="info-group">
+                <div class="info-item">
+                  <div class="info-label">
+                    <i class="fas fa-map-marker-alt"></i> Destination
+                  </div>
+                  <div class="info-value"><%= booking.place %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">
+                    <i class="fas fa-money-bill-wave"></i> Price
+                  </div>
+                  <div class="info-value">₹<%= booking.totalAmount %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">
+                    <i class="fas fa-calendar-alt"></i> Pickup Date
+                  </div>
+                  <div class="info-value"><%= new Date(booking.pickupDate).toLocaleDateString() %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">
+                    <i class="fas fa-calendar-alt"></i> Dropoff Date
+                  </div>
+                  <div class="info-value"><%= new Date(booking.dropoffDate).toLocaleDateString() %></div>
+                </div>
+                <% if (booking.vehicle?.registrationNumber) { %>
+                  <div class="info-item">
+                    <div class="info-label">
+                      <i class="fas fa-hashtag"></i> Reg. Number
+                    </div>
+                    <div class="info-value"><%= booking.vehicle.registrationNumber %></div>
+                  </div>
+                <% } %>
+                <div class="info-item">
+                  <div class="info-label">
+                    <i class="fas fa-calendar-check"></i> Booked On
+                  </div>
+                  <div class="info-value"><%= new Date(booking.createdAt).toLocaleDateString() %></div>
+                </div>
+              </div>
+
+              <div class="section-divider"></div>
+              
+              <!-- Action Buttons -->
+              <div class="d-flex flex-wrap gap-2 justify-content-between">
+                <% if (booking.vehicleStatus === "Booked") { %>
+                  <form action="/cancel-booking/<%= booking._id %>" method="POST">
+                    <input type="hidden" name="timeDifference" value="<%= timeDifference %>">
+                    <button type="submit" class="btn btn-custom btn-cancel">
+                      <i class="fas fa-ban me-2"></i> Cancel Booking
+                    </button>
+                  </form>
+                <% } %>
+              </div>
+
+              <!-- Renewal Option -->
+              <% if (booking.vehicleStatus === "Booked") { %>
+                <div class="extension-form">
+                  <h6 class="section-title">
+                    <i class="fas fa-calendar-plus"></i> Extend Your Booking
+                  </h6>
+                  <form action="/renew-booking/<%= booking._id %>" method="POST" class="d-flex gap-2 align-items-center">
+                    <div class="flex-grow-1">
+                      <input type="number" class="form-control" name="additionalDays" id="additionalDays" min="1" placeholder="Number of days" required>
+                    </div>
+                    <button type="submit" class="btn btn-custom btn-extend">
+                      <i class="fas fa-plus me-2"></i> Extend
+                    </button>
+                  </form>
+                </div>
+              <% } else if (booking.vehicleStatus === "Cancelled") { %>
+                <p class="text-danger mt-3"><i class="fas fa-info-circle me-2"></i>This booking was cancelled. No further modifications allowed.</p>
+              <% } %>
+
+              <!-- Driver Info -->
+              <% if (booking.driver) { %>
+                <div class="section-divider"></div>
+                <h6 class="section-title">
+                  <i class="fas fa-user"></i> Driver Information
+                </h6>
+                <div class="driver-info">
+                  <div class="info-group">
+                    <div class="info-item">
+                      <div class="info-label">
+                        <i class="fas fa-id-card"></i> Name
+                      </div>
+                      <div class="info-value"><%= booking.driver.username %></div>
+                    </div>
+                    <div class="info-item">
+                      <div class="info-label">
+                        <i class="fas fa-phone"></i> Contact
+                      </div>
+                      <div class="info-value"><a href="tel:<%= booking.driver.phone %>"><i class="fas fa-phone me-1"></i> <%= booking.driver.phone %></a></div>
+                    </div>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="section-divider"></div>
+                <p class="text-muted mt-3"><i class="fas fa-user-clock me-2"></i> Driver not assigned yet. You'll be notified when a driver is assigned.</p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>

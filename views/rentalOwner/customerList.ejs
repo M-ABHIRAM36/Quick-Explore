@@ -1,0 +1,306 @@
+<%- include("../includes/basicCode") %>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<style>
+    :root {
+        --primary-color: #4e54c8;
+        --secondary-color: #8f94fb;
+        --accent-color: #ff6b6b;
+        --text-color: #333;
+        --light-bg: #f8f9fa;
+        --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: var(--text-color);
+    }
+    
+    .navbar {
+        background: var(--gradient-bg);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 0.7rem 1rem;
+    }
+    
+    .navbar-brand {
+        font-weight: 600;
+        font-size: 1.4rem;
+    }
+    
+    .page-header {
+        background: var(--gradient-bg);
+        padding: 2.5rem 0;
+        border-radius: 0.5rem;
+        margin: 2rem 0;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.3;
+    }
+    
+    .btn-back {
+        background-color: white;
+        color: var(--primary-color);
+        border: none;
+        box-shadow: var(--card-shadow);
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-bottom: 1.5rem;
+    }
+    
+    .btn-back:hover {
+        transform: translateX(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        background: #f0f0f0;
+    }
+    
+    .customer-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 1.5rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .customer-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-header {
+        background: var(--gradient-bg);
+        color: white;
+        padding: 1rem;
+        border: none;
+    }
+    
+    .info-group {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 0.8rem;
+    }
+    
+    .info-item {
+        flex: 1 0 48%;
+        min-width: 200px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    .info-item i {
+        color: var(--primary-color);
+        margin-right: 10px;
+        font-size: 1.1rem;
+        width: 24px;
+        text-align: center;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+    }
+    
+    .empty-state img {
+        max-width: 200px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .btn-complete {
+        background: var(--gradient-bg);
+        border: none;
+        border-radius: 50px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-complete:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(78, 84, 200, 0.4);
+    }
+    
+    .status-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        background: rgba(78, 84, 200, 0.1);
+        color: var(--primary-color);
+    }
+    
+    /* Animation delay classes */
+    .delay-0 { animation-delay: 0s; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+    .delay-7 { animation-delay: 0.7s; }
+    .delay-8 { animation-delay: 0.8s; }
+    .delay-9 { animation-delay: 0.9s; }
+</style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/places2">
+            <i class="fas fa-map-marked-alt me-2"></i> Quick Explore
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/places2"><i class="fas fa-home me-1"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/owner/home"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><i class="fas fa-users me-1"></i> Customers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header animate__animated animate__fadeIn">
+        <h1 class="display-5 mb-2"><i class="fas fa-users me-3"></i>Your Rental Customers</h1>
+        <p class="lead">View and manage bookings for your rental property</p>
+    </div>
+    
+    <div class="container mt-3">
+        <a href="/owner/home" class="btn btn-back animate__animated animate__fadeInLeft">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <% if (bookings.length === 0) { %>
+        <div class="empty-state animate__animated animate__fadeIn">
+            <img src="/images/no-bookings.png" alt="No Bookings" class="animate__animated animate__pulse animate__infinite animate__slow">
+            <h4 class="mt-4 text-muted">No bookings found for your rental</h4>
+            <p class="text-muted">When customers book your property, they will appear here</p>
+        </div>
+    <% } else { %>
+        <div class="row">
+            <% bookings.forEach((booking, index) => { %>
+                <div class="col-lg-6 animate__animated animate__fadeInUp delay-<%= Math.min(index, 9) %>">
+                    <div class="customer-card">
+                        <div class="card-header">
+                            <h5 class="m-0"><i class="fas fa-map-marker-alt me-2"></i><%= booking.place %></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <div>
+                                        <div class="fw-medium">Check-in</div>
+                                        <div><%= new Date(booking.checkInDate).toDateString() %></div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <div>
+                                        <div class="fw-medium">Check-out</div>
+                                        <div><%= new Date(booking.checkOutDate).toDateString() %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <i class="fas fa-user"></i>
+                                    <div>
+                                        <div class="fw-medium">Customer Name</div>
+                                        <div><%= booking.user?.username || "N/A" %></div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <div class="fw-medium">Phone Number</div>
+                                        <div><%= booking.user?.phone || "N/A" %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <div class="fw-medium">Email Address</div>
+                                        <div><%= booking.user?.email || "N/A" %></div>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <div>
+                                        <div class="fw-medium">Total Amount</div>
+                                        <div>₹<%= booking.totalAmount %></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <% if (booking.status === "Booked") { %>
+                                    <form action="/owner/complete-booking/<%= booking._id %>" method="POST">
+                                        <button type="submit" class="btn btn-complete">
+                                            <i class="fas fa-check-circle me-2"></i>Mark as Completed
+                                        </button>
+                                    </form>
+                                <% } else { %>
+                                    <div class="status-badge">
+                                        <i class="fas fa-check-circle me-1"></i>Status: <%= booking.rentalStatus %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<!-- Animation script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add pulse animation to cards on hover
+        const cards = document.querySelectorAll('.customer-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('animate__pulse');
+            });
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('animate__pulse');
+            });
+        });
+    });
+</script>

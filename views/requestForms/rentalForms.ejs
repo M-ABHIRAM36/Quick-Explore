@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Explore - Rental Requests</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --light-gray: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            font-family: 'Poppins', sans-serif;
+            padding-top: 70px;
+        }
+        
+        .navbar {
+            background: var(--secondary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+        }
+        
+        .container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        
+        .info-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .info-item i {
+            width: 25px;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .badge {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .badge.bg-warning {
+            background-color: var(--warning-color) !important;
+            color: #000;
+        }
+        
+        .badge.bg-success {
+            background-color: var(--success-color) !important;
+        }
+        
+        .badge.bg-danger {
+            background-color: var(--danger-color) !important;
+        }
+        
+        .form-select {
+            border-radius: 8px;
+            margin: 0rem 0;
+            padding: 0.5rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus, .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-link {
+            color: var(--primary-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-link:hover {
+            color: #357abd;
+            transform: translateX(5px);
+        }
+        
+        .details {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.2rem;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .filter-controls {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding-left: 40px;
+            border-radius: 20px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #aaa;
+        }
+        
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        
+        .input-group .form-control {
+            border-radius: 8px 0 0 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group .btn {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .price-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .status-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Stats Cards Styles */
+        .stats-card {
+            padding: 1.2rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .stats-card:hover::before {
+            opacity: 1;
+        }
+
+        .stats-card .count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-card .label {
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .pending {
+            background: linear-gradient(135deg, var(--warning-color), #ffb347);
+            color: #2c2c2c;
+        }
+
+        .approved {
+            background: linear-gradient(135deg, var(--success-color), #43e97b);
+        }
+
+        .rejected {
+            background: linear-gradient(135deg, var(--danger-color), #ff4757);
+        }
+
+        /* Icons for stats cards */
+        .stats-card::after {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            font-size: 4rem;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .pending::after {
+            content: '\f252'; /* fa-hourglass */
+        }
+
+        .approved::after {
+            content: '\f00c'; /* fa-check */
+        }
+
+        .rejected::after {
+            content: '\f00d'; /* fa-times */
+        }
+
+        .stats-overview {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .stats-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-building me-2"></i> Quick Explore
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin"><i class="fas fa-home me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-building me-1"></i> Rentals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/requestForms/vehicleForms"><i class="fas fa-car me-1"></i> Vehicles</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-users me-1"></i> Users</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header text-center animate__animated animate__fadeIn">
+            <h1 class="display-4 mb-0"><i class="fas fa-building me-3"></i>Rental Requests</h1>
+        </div>
+
+        <!-- Stats Overview Section -->
+        <div class="stats-overview animate__animated animate__fadeInUp">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <h5 class="stats-title"><i class="fas fa-chart-bar me-2"></i>Request Statistics</h5>
+                    <p class="text-muted">Overview of all rental property requests by status</p>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="stats-card pending animate__animated animate__fadeIn">
+                                <div class="count" id="pendingCount">0</div>
+                                <div class="label">Pending</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card approved animate__animated animate__fadeIn" style="animation-delay: 0.1s">
+                                <div class="count" id="approvedCount">0</div>
+                                <div class="label">Approved</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card rejected animate__animated animate__fadeIn" style="animation-delay: 0.2s">
+                                <div class="count" id="rejectedCount">0</div>
+                                <div class="label">Rejected</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-controls animate__animated animate__fadeInUp">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by type, location, or owner...">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="rentalCards">
+            <% for(let rental of allRentalData) { %>
+                <div class="col-md-6 col-lg-4 rental-card fadeInUp" 
+                     data-type="<%= rental.propertyType %>" 
+                     data-location="<%= rental.location %>"
+                     data-owner="<%= rental.ownerName %>"
+                     data-status="<%= rental.adminStatus %>">
+                    <div class="card">
+                        <div class="position-relative">
+                            <img src="<%= rental.images && rental.images.length > 0 ? rental.images[0] : 'https://via.placeholder.com/400x250?text=No+Image+Available' %>" class="card-img-top" alt="Rental Image">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge <%= rental.adminStatus === 'Pending' ? 'bg-warning' : rental.adminStatus === 'Approved' ? 'bg-success' : 'bg-danger' %>">
+                                    <i class="fas <%= rental.adminStatus === 'Pending' ? 'fa-clock' : rental.adminStatus === 'Approved' ? 'fa-check' : 'fa-times' %> me-1"></i>
+                                    <%= rental.adminStatus %>
+                                </span>
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 m-2">
+                                <div class="price-tag">
+                                    <i class="fas fa-tag me-1"></i> ₹<%= rental.price %>/day
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-<%= rental.propertyType.toLowerCase() === 'apartment' ? 'building' : 'home' %> me-2"></i>
+                                <%= rental.propertyType %> in <%= rental.location %>
+                            </h5>
+                            
+                            <div class="info-item">
+                                <i class="fas fa-user"></i>
+                                <span><strong>Owner:</strong> <%= rental.ownerName %></span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><strong>Location:</strong> <%= rental.location %>, <%= rental.pincode %></span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <i class="fas fa-route"></i>
+                                <span><strong>Distance from <%= rental.place %>:</strong> <%= rental.distFromPlace %> km</span>
+                            </div>
+
+                            <!-- Toggle button for details -->
+                            <button class="btn btn-link" onclick="toggleDetails('<%= rental._id %>')">
+                                <i class="fas fa-info-circle me-2"></i> View More Details <i class="fas fa-chevron-right ms-2" id="icon-<%= rental._id %>"></i>
+                            </button>
+
+                            <!-- Hidden details -->
+                            <div id="<%= rental._id %>" class="details">
+                                <div class="info-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span><strong>Contact:</strong> <%= rental.contact %></span>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <span><strong>Email:</strong> <%= rental.email || 'N/A' %></span>
+                                </div>
+                                
+                                <% if(rental.description) { %>
+                                <div class="info-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span><strong>Description:</strong> <%= rental.description %></span>
+                                </div>
+                                <% } %>
+                            </div>
+
+                            <div class="status-section">
+                                <!-- Update Price Form -->
+                                <form action="/requestForms/updatePrice/<%= rental._id %>" method="POST">
+                                    <label for="price-<%= rental._id %>" class="form-label"><i class="fas fa-money-bill-wave me-2"></i>Update Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" class="form-control" id="price-<%= rental._id %>" name="price" value="<%= rental.price %>" required>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-sync-alt me-1"></i> Update
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <!-- Status Update Form -->
+                                <form action="/requestForms/updateStatus/<%= rental._id %>" method="POST" class="mt-3">
+                                    <label for="status-<%= rental._id %>" class="form-label"><i class="fas fa-chart-line me-2"></i>Update Status</label>
+                                    <select name="adminStatus" id="status-<%= rental._id %>" class="form-select">
+                                        <option value="Pending" <%= rental.adminStatus === "Pending" ? "selected" : "" %>>🕒 Pending</option>
+                                        <option value="Approved" <%= rental.adminStatus === "Approved" ? "selected" : "" %>>✅ Approved</option>
+                                        <option value="Rejected" <%= rental.adminStatus === "Rejected" ? "selected" : "" %>>❌ Rejected</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-primary w-100 mt-2">
+                                        <i class="fas fa-sync-alt me-2"></i>Update Status
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Initialize page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all rental cards
+            const rentalCards = document.querySelectorAll('.rental-card');
+            
+            // Add animation delay for staggered entry
+            rentalCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate__animated', 'animate__fadeInUp');
+                }, 100 * index);
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', filterRentals);
+            
+            // Status filter
+            const statusFilter = document.getElementById('statusFilter');
+            statusFilter.addEventListener('change', filterRentals);
+            
+            // Update the stats counters
+            updateStats();
+            
+            function filterRentals() {
+                const searchValue = searchInput.value.toLowerCase();
+                const statusValue = statusFilter.value;
+                
+                rentalCards.forEach(card => {
+                    const type = card.getAttribute('data-type').toLowerCase();
+                    const location = card.getAttribute('data-location').toLowerCase();
+                    const owner = card.getAttribute('data-owner').toLowerCase();
+                    const status = card.getAttribute('data-status');
+                    
+                    const matchesSearch = type.includes(searchValue) || 
+                                         location.includes(searchValue) || 
+                                         owner.includes(searchValue);
+                                         
+                    const matchesStatus = statusValue === 'all' || status === statusValue;
+                    
+                    if(matchesSearch && matchesStatus) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Update stats counters
+            function updateStats() {
+                let pendingCount = 0;
+                let approvedCount = 0;
+                let rejectedCount = 0;
+                
+                rentalCards.forEach(card => {
+                    const status = card.getAttribute('data-status');
+                    
+                    if(status === 'Pending') pendingCount++;
+                    else if(status === 'Approved') approvedCount++;
+                    else if(status === 'Rejected') rejectedCount++;
+                });
+                
+                // Animate the counters
+                animateCount('pendingCount', pendingCount);
+                animateCount('approvedCount', approvedCount);
+                animateCount('rejectedCount', rejectedCount);
+            }
+            
+            // Animated counter function
+            function animateCount(elementId, targetCount) {
+                const element = document.getElementById(elementId);
+                const duration = 1500; // ms
+                const frameDuration = 1000/60; // 60fps
+                const totalFrames = Math.round(duration / frameDuration);
+                let frame = 0;
+                
+                const counter = setInterval(() => {
+                    frame++;
+                    const progress = frame / totalFrames;
+                    const currentCount = Math.round(targetCount * progress);
+                    
+                    if (frame === totalFrames) {
+                        clearInterval(counter);
+                    }
+                    
+                    element.textContent = currentCount;
+                }, frameDuration);
+            }
+        });
+
+        // Toggle details visibility
+        function toggleDetails(rentalId) {
+            const detailsDiv = document.getElementById(rentalId);
+            const icon = document.getElementById(`icon-${rentalId}`);
+            
+            if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+                detailsDiv.style.display = "block";
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                detailsDiv.style.display = "none";
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-right');
+            }
+        }
+    </script>
+</body>
+</html>

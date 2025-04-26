@@ -1,0 +1,616 @@
+<%- include("../includes/navbar.ejs")%>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<!-- Datepicker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+    :root {
+        --primary: #4a90e2;
+        --primary-dark: #3a7bc8;
+        --secondary: #7952b3;
+        --accent: #ff7e5f;
+        --success: #28a745;
+        --light: #f8f9fa;
+        --dark: #2c3e50;
+        --gray-100: #f8f9fa;
+        --gray-200: #e9ecef;
+        --gray-300: #dee2e6;
+        --gray-400: #ced4da;
+        --gray-500: #adb5bd;
+        --gray-600: #6c757d;
+        --gray-700: #495057;
+        --gray-800: #343a40;
+        --border-radius: 12px;
+        --box-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --box-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f9fafb;
+        color: var(--gray-800);
+    }
+
+    .header-section {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 3rem 0;
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.4;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+    }
+
+    .header-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        position: relative;
+    }
+
+    .property-card {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow-sm);
+        overflow: hidden;
+        margin-bottom: 2rem;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .property-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-md);
+    }
+
+    .property-header {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 1.5rem;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .property-title {
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .property-price {
+        background: rgba(255,255,255,0.2);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        backdrop-filter: blur(5px);
+    }
+
+    .property-body {
+        padding: 1.5rem;
+    }
+
+    .property-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .section-title i {
+        color: var(--primary);
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(74, 144, 226, 0.1);
+        border-radius: 50%;
+        color: var(--primary);
+        flex-shrink: 0;
+    }
+
+    .info-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-label {
+        font-size: 0.75rem;
+        color: var(--gray-600);
+    }
+
+    .info-value {
+        font-weight: 500;
+    }
+
+    .property-description {
+        background: var(--gray-100);
+        padding: 1.2rem;
+        border-radius: var(--border-radius);
+        margin-bottom: 1.5rem;
+        position: relative;
+        line-height: 1.6;
+    }
+
+    .property-description::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10px;
+        font-size: 3rem;
+        color: var(--gray-400);
+        line-height: 1;
+    }
+
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .gallery-item {
+        height: 150px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.1);
+    }
+
+    .booking-form {
+        background: var(--gray-100);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+    }
+
+    .input-wrapper {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .input-label {
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        background: var(--gray-100);
+        padding: 0 8px;
+        font-size: 0.8rem;
+        color: var(--gray-700);
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+        background-color: #fff;
+        border: 1px solid var(--gray-300);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+    }
+
+    .form-control:focus {
+        border-color: var(--primary);
+        outline: 0;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+    .date-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-500);
+        pointer-events: none;
+    }
+
+    .nights-count {
+        text-align: center;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        color: var(--gray-600);
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: white;
+        border-radius: var(--border-radius);
+        margin-bottom: 1.5rem;
+    }
+
+    .total-label {
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .total-label i {
+        color: var(--primary);
+    }
+
+    .total-value {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary-dark);
+    }
+
+    .book-btn {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(120deg, var(--success), #179a38);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .book-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, #179a38, #36c259);
+        transition: var(--transition);
+        z-index: 0;
+    }
+
+    .book-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .book-btn:hover::before {
+        left: 0;
+    }
+
+    .book-btn span {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .hr-divider {
+        margin: 2rem 0;
+        border: 0;
+        height: 1px;
+        background: var(--gray-200);
+    }
+
+    .empty-container {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow-sm);
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        color: var(--gray-400);
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .empty-text {
+        color: var(--gray-600);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .property-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .property-price {
+            align-self: flex-start;
+        }
+        
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .image-gallery {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .header-title {
+            font-size: 2rem;
+        }
+        
+        .image-gallery {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="header-section animate__animated animate__fadeIn">
+    <h1 class="header-title">Available Rooms in <%= place %></h1>
+    <p class="header-subtitle">Find your perfect accommodation for an unforgettable stay</p>
+</div>
+
+<div class="container">
+<% if (rentals.length > 0) { %>
+        <% rentals.forEach((rental, index) => { %>
+            <div class="property-card animate__animated animate__fadeInUp animate__delay-<%= index*2 %>s">
+                <div class="property-header">
+                    <h5 class="property-title"><%= rental.place %> - <%= rental.propertyType %></h5>
+                    <div class="property-price">₹<%= rental.price %> / night</div>
+                </div>
+
+                <div class="property-body">
+                    <!-- Property Details Section -->
+                    <div class="property-section">
+                        <h4 class="section-title"><i class="fas fa-info-circle"></i> Property Details</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Owner Name</span>
+                                    <span class="info-value"><%= rental.ownerName %></span>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Contact</span>
+                                    <span class="info-value"><%= rental.contact %></span>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Email</span>
+                                    <span class="info-value"><%= rental.email || 'N/A' %></span>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Location</span>
+                                    <span class="info-value"><%= rental.place %></span>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <div class="info-content">
+                                    <span class="info-label">Distance</span>
+                                    <span class="info-value"><%= rental.distFromPlace %> km from attraction</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Description -->
+                    <% if (rental.description) { %>
+                        <div class="property-description">
+                            <%= rental.description %>
+                        </div>
+                    <% } %>
+
+                    <!-- Property Images -->
+                    <div class="property-section">
+                        <h4 class="section-title"><i class="fas fa-images"></i> Property Images</h4>
+                        <div class="image-gallery">
+                            <% rental.images.forEach(function(image) { %>
+                                <div class="gallery-item">
+                                    <img src="<%= image %>" alt="Property Image">
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+
+                    <hr class="hr-divider">
+
+                    <!-- Booking Form -->
+                    <div class="property-section">
+                        <h4 class="section-title"><i class="fas fa-calendar-check"></i> Book This Property</h4>
+                        <div class="booking-form">
+                            <form action="/bookRental/<%= rental._id %>" method="POST">
+                                <div class="input-wrapper">
+                                    <label class="input-label" for="checkInDate-<%= rental._id %>">Check-in Date</label>
+                                    <input type="text" class="form-control datepicker" id="checkInDate-<%= rental._id %>" name="checkInDate" required placeholder="Select date">
+                                    <i class="fas fa-calendar-alt date-icon"></i>
+                                </div>
+                                
+                                <div class="input-wrapper">
+                                    <label class="input-label" for="checkOutDate-<%= rental._id %>">Check-out Date</label>
+                                    <input type="text" class="form-control datepicker" id="checkOutDate-<%= rental._id %>" name="checkOutDate" required placeholder="Select date">
+                                    <i class="fas fa-calendar-alt date-icon"></i>
+                                </div>
+                                
+                                <div class="nights-count" id="nightsCount-<%= rental._id %>">
+                                    Select dates to see your stay details
+                                </div>
+                                
+                                <div class="total-row">
+                                    <div class="total-label">
+                                        <i class="fas fa-receipt"></i>
+                                        <span>Total Amount</span>
+                                    </div>
+                                    <div class="total-value">₹<span id="totalDisplay-<%= rental._id %>"><%= rental.price %></span></div>
+                                </div>
+                                
+                                <input type="hidden" id="totalAmount-<%= rental._id %>" name="totalAmount" value="<%= rental.price %>">
+                                
+                                <button type="submit" class="book-btn">
+                                    <span><i class="fas fa-check-circle"></i> Book Now</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <div class="empty-container animate__animated animate__fadeIn">
+            <i class="fas fa-search empty-icon"></i>
+            <h3 class="empty-title">No Rooms Available</h3>
+            <p class="empty-text">We couldn't find any available rooms in <%= place %> at the moment. Please try again later or explore other nearby accommodations.</p>
+        </div>
+    <% } %>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+            <script>
+    // Initialize date pickers and calculate total for each rental
+    <% rentals.forEach(rental => { %>
+        const rentalId<%= rental._id %> = '<%= rental._id %>';
+        const pricePerNight<%= rental._id %> = <%= rental.price %>;
+        
+        // Set up check-in date picker
+const checkInPicker<%= rental._id %> = flatpickr('#checkInDate-<%= rental._id %>', {
+    minDate: 'today', // Cannot select a date before today
+    maxDate: new Date().fp_incr(15), // Allow selection up to 15 days from today
+    dateFormat: 'Y-m-d',
+    onChange: function(selectedDates, dateStr) {
+        // Set the minDate for check-out to be the selected check-in date
+        checkOutPicker<%= rental._id %>.set('minDate', dateStr);
+        
+        // Set the maxDate for check-out to be 1 month after the check-in date
+        checkOutPicker<%= rental._id %>.set('maxDate', new Date(selectedDates[0]).fp_incr(30));
+        
+        calculateTotal<%= rental._id %>();
+    }
+});
+
+// Set up check-out date picker
+const checkOutPicker<%= rental._id %> = flatpickr('#checkOutDate-<%= rental._id %>', {
+    minDate: 'today', // Cannot select a date before today
+    dateFormat: 'Y-m-d',
+    onChange: function(selectedDates, dateStr) {
+        calculateTotal<%= rental._id %>();
+    }
+});
+
+
+        
+        // Function to calculate total amount
+        function calculateTotal<%= rental._id %>() {
+            const checkInDate = document.getElementById(`checkInDate-<%= rental._id %>`).value;
+            const checkOutDate = document.getElementById(`checkOutDate-<%= rental._id %>`).value;
+
+                    if (checkInDate && checkOutDate) {
+                        const checkIn = new Date(checkInDate);
+                        const checkOut = new Date(checkOutDate);
+
+                        const timeDiff = checkOut - checkIn;
+                const days = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+                        if (days > 0) {
+                    const totalAmount = days * pricePerNight<%= rental._id %>;
+                    
+                    // Update hidden input and display
+                    document.getElementById(`totalAmount-<%= rental._id %>`).value = totalAmount;
+                    document.getElementById(`totalDisplay-<%= rental._id %>`).textContent = totalAmount;
+                    
+                    // Update nights count display
+                    document.getElementById(`nightsCount-<%= rental._id %>`).innerHTML = 
+                        `<i class="fas fa-moon"></i> ${days} night${days > 1 ? 's' : ''} at ₹${pricePerNight<%= rental._id %>} per night`;
+                        } else {
+                            alert("Check-out date must be later than check-in date.");
+                    document.getElementById(`totalAmount-<%= rental._id %>`).value = pricePerNight<%= rental._id %>;
+                    document.getElementById(`totalDisplay-<%= rental._id %>`).textContent = pricePerNight<%= rental._id %>;
+                    document.getElementById(`nightsCount-<%= rental._id %>`).textContent = 'Select dates to see your stay details';
+                        }
+                    }
+                }
+    <% }); %>
+            </script>

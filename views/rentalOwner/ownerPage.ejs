@@ -1,0 +1,320 @@
+<%- include("../includes/basicCode") %>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<style>
+    :root {
+        --primary-color: #4e54c8;
+        --secondary-color: #8f94fb;
+        --accent-color: #ff6b6b;
+        --text-color: #333;
+        --light-bg: #f8f9fa;
+        --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        --form-bg: #ffffff;
+        --success-color: #20bf6b;
+        --danger-color: #eb3b5a;
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e5ec' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        padding-top: 70px;
+    }
+    
+    .navbar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 0.7rem 1rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+    
+    .navbar-brand {
+        font-weight: 700;
+        color: white !important;
+    }
+    
+    .navbar-brand i {
+        margin-right: 8px;
+        font-size: 1.4rem;
+    }
+    
+    .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .page-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 2rem 0;
+        border-radius: 15px;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"><path fill="none" stroke="white" stroke-width="1" d="M20,20 L80,80 M0,40 L40,0 M60,0 L0,60 M80,20 L20,80" stroke-opacity="0.1"/></svg>');
+        background-size: 40px;
+        opacity: 0.3;
+    }
+    
+    .welcome-section {
+        background: var(--form-bg);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .welcome-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, rgba(78, 84, 200, 0.1), rgba(143, 148, 251, 0.1));
+        border-radius: 0 0 0 100%;
+    }
+    
+    .welcome-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+    
+    .welcome-text {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .dashboard-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .dashboard-card {
+        background: var(--form-bg);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        flex: 1;
+        min-width: 280px;
+        border: none;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+    
+    .card-header {
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 1.2rem 1.5rem;
+        font-weight: 600;
+        border: none;
+        text-align: center;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .card-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .customers-icon {
+        color: var(--success-color);
+    }
+    
+    .logout-icon {
+        color: var(--danger-color);
+    }
+    
+    .password-icon {
+        color: var(--accent-color);
+    }
+    
+    .btn-dashboard {
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(78, 84, 200, 0.3);
+        margin-top: 1.5rem;
+        width: 100%;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+    
+    .btn-dashboard:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(78, 84, 200, 0.5);
+        color: white;
+    }
+    
+    .btn-danger {
+        background: linear-gradient(to right, var(--danger-color), #fc5c65);
+        box-shadow: 0 4px 15px rgba(235, 59, 90, 0.3);
+    }
+    
+    .btn-danger:hover {
+        box-shadow: 0 8px 25px rgba(235, 59, 90, 0.5);
+    }
+    
+    .btn-accent {
+        background: linear-gradient(to right, var(--accent-color), #ff8e8e);
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    }
+    
+    .btn-accent:hover {
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+    }
+</style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand animate__animated animate__fadeIn" href="/places2">
+            <i class="fas fa-map-marked-alt me-2"></i> Quick Explore
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link animate__animated animate__fadeIn" href="/places2"><i class="fas fa-home me-1"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link animate__animated animate__fadeIn active" href="#"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link animate__animated animate__fadeIn" href="/owner/customer-details"><i class="fas fa-users me-1"></i> Customers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header animate__animated animate__fadeIn">
+        <h1 class="display-5 mb-2"><i class="fas fa-tachometer-alt me-3"></i>Rental Owner Dashboard</h1>
+        <p class="lead">Manage your property rentals and customer bookings</p>
+    </div>
+
+    <div class="welcome-section animate__animated animate__fadeInUp">
+        <div class="welcome-title">
+            <i class="fas fa-hand-wave me-2" style="color: var(--primary-color);"></i>Welcome, <%= rental.ownerName %>!
+        </div>
+        <p class="welcome-text">
+            Welcome to your rental owner dashboard. From here, you can view your customer bookings and manage your property listings.
+        </p>
+    </div>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+            <div class="card-header">
+                <h5 class="m-0"><i class="fas fa-users me-2"></i>Customer Management</h5>
+            </div>
+            <div class="card-body">
+                <i class="fas fa-users card-icon customers-icon"></i>
+                <h4 class="mb-3">View Customer Bookings</h4>
+                <p class="text-muted">
+                    Check all your customer bookings, contact information, and booking status
+                </p>
+                <a href="/owner/customer-details" class="btn-dashboard">
+                    <i class="fas fa-eye me-2"></i>View Customers
+                </a>
+            </div>
+        </div>
+        
+        <div class="dashboard-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <div class="card-header">
+                <h5 class="m-0"><i class="fas fa-key me-2"></i>Account Security</h5>
+            </div>
+            <div class="card-body">
+                <i class="fas fa-key card-icon password-icon"></i>
+                <h4 class="mb-3">Update Password</h4>
+                <p class="text-muted">
+                    Change your password to maintain account security
+                </p>
+                <a href="/owner/profile" class="btn-dashboard ">
+                    <i class="fas fa-lock me-2"></i>Change Password
+                </a>
+            </div>
+        </div>
+        
+        <div class="dashboard-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+            <div class="card-header">
+                <h5 class="m-0"><i class="fas fa-sign-out-alt me-2"></i>Account Actions</h5>
+            </div>
+            <div class="card-body">
+                <i class="fas fa-sign-out-alt card-icon logout-icon"></i>
+                <h4 class="mb-3">Sign Out</h4>
+                <p class="text-muted">
+                    Log out from your rental owner account session
+                </p>
+                <a href="/owner/logout" class="btn-dashboard btn-danger">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add animation to cards on hover
+    document.querySelectorAll('.dashboard-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.classList.add('animate__animated', 'animate__pulse');
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('animate__animated', 'animate__pulse');
+        });
+    });
+</script>

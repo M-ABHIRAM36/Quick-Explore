@@ -1,0 +1,478 @@
+<%- include("../includes/navbar.ejs") %>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<style>
+    :root {
+        --primary-color: #4e54c8;
+        --secondary-color: #8f94fb;
+        --accent-color: #ff6b6b;
+        --success-color: #20bf6b;
+        --warning-color: #f7b731;
+        --danger-color: #eb4d4b;
+        --text-color: #333;
+        --light-bg: #f8f9fa;
+        --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e5ec' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        min-height: 100vh;
+        color: var(--text-color);
+    }
+    
+    .page-header {
+        background: var(--gradient-bg);
+        padding: 2.5rem 0;
+        border-radius: 15px;
+        margin: 2rem 0;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(78, 84, 200, 0.2);
+    }
+    
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.3;
+    }
+    
+    .booking-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 2rem;
+        border: none;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .booking-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-header {
+        background: var(--gradient-bg);
+        color: white;
+        padding: 1.2rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+    
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.25rem;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.3;
+        z-index: 1;
+    }
+    
+    .card-body {
+        padding: 1.8rem;
+    }
+    
+    .booking-title {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        border-bottom: 2px solid rgba(0,0,0,0.05);
+        padding-bottom: 0.8rem;
+    }
+    
+    .property-type {
+        display: inline-block;
+        background: rgba(78, 84, 200, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .info-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .info-item {
+        flex: 1 0 45%;
+        min-width: 200px;
+    }
+    
+    .info-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 0.3rem;
+    }
+    
+    .info-label i {
+        color: var(--primary-color);
+        width: 20px;
+    }
+    
+    .info-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .status-booked {
+        background-color: rgba(32, 191, 107, 0.15);
+        color: var(--success-color);
+    }
+    
+    .status-ongoing {
+        background-color: rgba(247, 183, 49, 0.15);
+        color: var(--warning-color);
+    }
+    
+    .status-cancelled {
+        background-color: rgba(235, 77, 75, 0.15);
+        color: var(--danger-color);
+    }
+    
+    .section-divider {
+        height: 1px;
+        background: linear-gradient(to right, rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.05));
+        margin: 1.5rem 0;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .section-title i {
+        font-size: 1.1rem;
+    }
+    
+    .btn-custom {
+        border: none;
+        border-radius: 50px;
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .btn-cancel {
+        background: linear-gradient(135deg, #ff6b6b, #ee5253);
+        color: white;
+    }
+    
+    .btn-cancel:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(235, 77, 75, 0.4);
+        color: white;
+    }
+    
+    .btn-renew {
+        background: linear-gradient(135deg, #f7b731, #fa8231);
+        color: white;
+    }
+    
+    .btn-renew:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(247, 183, 49, 0.4);
+        color: white;
+    }
+    
+    .btn-find {
+        background: var(--gradient-bg);
+        color: white;
+        box-shadow: 0 4px 15px rgba(78, 84, 200, 0.3);
+    }
+    
+    .btn-find:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(78, 84, 200, 0.5);
+        color: white;
+    }
+    
+    .days-input {
+        border: 2px solid rgba(0,0,0,0.1);
+        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        width: 100px;
+        margin: 0 1rem;
+        text-align: center;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    
+    .days-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(78, 84, 200, 0.2);
+        outline: none;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--card-shadow);
+        margin: 2rem auto;
+        max-width: 600px;
+    }
+    
+    .empty-state img {
+        max-width: 250px;
+        margin-bottom: 2rem;
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .empty-state h4 {
+        color: #555;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .empty-state p {
+        color: #777;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="page-header animate__animated animate__fadeIn">
+        <h1 class="display-5 mb-2"><i class="fas fa-building me-3"></i>My Rental Bookings</h1>
+        <p class="lead">Manage your stays and rental bookings</p>
+    </div>
+    
+    <div class="mt-4 mb-4">
+        <a href="/places2" class="btn btn-custom btn-find animate__animated animate__fadeInUp">
+            <i class="fas fa-search me-2"></i> Find More Rentals
+        </a>
+    </div>
+
+    <% if (bookings.length === 0) { %>
+        <div class="empty-state animate__animated animate__fadeIn">
+            <img src="/images/no-bookings.png" alt="No Bookings" class="img-fluid">
+            <h4>You haven't booked any rentals yet</h4>
+            <p>Browse available properties and book your next stay now!</p>
+            <a href="/places2" class="btn btn-custom btn-find">
+                <i class="fas fa-home me-2"></i> Browse Available Rentals
+            </a>
+        </div>
+    <% } else { %>
+        <div class="row">
+            <% bookings.forEach((booking, index) => { 
+                let bookingTime = new Date(booking.createdAt).getTime();
+                let currentTime = new Date().getTime();
+                let timeDifference = (currentTime - bookingTime) / (1000 * 60); // in minutes
+                
+                let statusClass = "";
+                if (booking.rentalStatus === "Cancelled") {
+                    statusClass = "status-cancelled";
+                } else if (booking.status === "Ongoing") {
+                    statusClass = "status-ongoing";
+                } else {
+                    statusClass = "status-booked";
+                }
+            %>
+                <div class="col-lg-6 animate__animated animate__fadeInUp" style="animation-delay: <%= index * 0.1 %>s">
+                    <div class="booking-card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-map-marker-alt me-2"></i><%= booking.place %></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="property-type">
+                                <i class="fas fa-home me-2"></i><%= booking.rentalInfo?.propertyType || "Room" %>
+                            </div>
+                            
+                            <h3 class="booking-title">
+                                Stay in <%= booking.rentalInfo?.location || "Unknown Location" %>
+                            </h3>
+                            
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-calendar-check"></i>Check-in
+                                    </div>
+                                    <div class="info-value">
+                                        <%= new Date(booking.checkInDate).toDateString() %>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-calendar-times"></i>Check-out
+                                    </div>
+                                    <div class="info-value">
+                                        <%= new Date(booking.checkOutDate).toDateString() %>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-money-bill-wave"></i>Total Amount
+                                    </div>
+                                    <div class="info-value">
+                                        ₹<%= booking.totalAmount %>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-info-circle"></i>Status
+                                    </div>
+                                    <div class="status-badge <%= statusClass %>">
+                                        <% if (booking.rentalStatus === "Cancelled") { %>
+                                            <i class="fas fa-times-circle me-2"></i>Booking Cancelled
+                                        <% } else { %>
+                                            <i class="fas fa-check-circle me-2"></i><%= booking.status %>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <% if (booking.status === "Booked") { %>
+                                <form action="/cancel-rental/<%= booking._id %>" method="POST" class="mt-4">
+                                    <input type="hidden" name="timeDifference" value="<%= timeDifference %>">
+                                    <button type="submit" class="btn btn-custom btn-cancel">
+                                        <i class="fas fa-ban me-2"></i>Cancel Booking
+                                    </button>
+                                </form>
+                            <% } else if (booking.rentalStatus === "Cancelled") { %>
+                                <div class="alert alert-light mt-3 border">
+                                    <i class="fas fa-info-circle me-2 text-muted"></i>
+                                    <span class="text-muted">Booking has been cancelled. No further changes allowed.</span>
+                                </div>
+                            <% } else { %>
+                                <div class="alert alert-light mt-3 border">
+                                    <i class="fas fa-info-circle me-2 text-muted"></i>
+                                    <span class="text-muted">Cancellation not available for this booking.</span>
+                                </div>
+                            <% } %>
+                            
+                            <!-- Renewal Form -->
+                            <% if (booking.status === "Booked" ||booking.status === "Ongoing" ) { %>
+                                <div class="section-divider"></div>
+                                <form action="/renew-rental/<%= booking._id %>" method="POST" class="mt-4">
+                                    <div class="d-flex align-items-center flex-wrap mb-3">
+                                        <label for="additionalDays<%= index %>" class="me-2">Extend stay by:</label>
+                                        <input type="number" name="additionalDays" id="additionalDays<%= index %>" min="1" required class="days-input">
+                                        <span>days</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-custom btn-renew">
+                                        <i class="fas fa-calendar-plus me-2"></i>Extend Booking
+                                    </button>
+                                </form>
+                            <% } %>
+
+                            <!-- Owner Info -->
+                            <div class="section-divider"></div>
+                            <div class="section-title">
+                                <i class="fas fa-user-tie"></i>Property Owner Details
+                            </div>
+                            
+                            <div class="info-group">
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-user"></i>Name
+                                    </div>
+                                    <div class="info-value">
+                                        <%= booking.rentalInfo?.ownerName || "N/A" %>
+                                    </div>
+                                </div>
+                                
+                                <div class="info-item">
+                                    <div class="info-label">
+                                        <i class="fas fa-phone"></i>Contact
+                                    </div>
+                                    <div class="info-value">
+                                        <%= booking.rentalInfo?.contact || "N/A" %>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item mt-3">
+                                <div class="info-label">
+                                    <i class="fas fa-envelope"></i>Email
+                                </div>
+                                <div class="info-value">
+                                    <%= booking.rentalInfo?.email || "N/A" %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add subtle hover effect to the cards
+        const cards = document.querySelectorAll('.booking-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.classList.add('animate__pulse');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.classList.remove('animate__pulse');
+            });
+        });
+    });
+</script>

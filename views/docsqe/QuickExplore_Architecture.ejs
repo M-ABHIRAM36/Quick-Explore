@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickExplore - System Architecture</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --box-bg: #ffffff;
+            --border-color: #dee2e6;
+            
+            /* Color scheme from the image */
+            --system-color: #18477e;
+            --entity-color: #79b3f9;
+            --storage-color: #a6c9ff;
+            --process-color: #18477e;
+            --title-bg: #79b3f9;
+            --backend-color: #4a73e2;
+            --database-color: #a6c9ff;
+            --frontend-color: #5fb0ff;
+            --external-color: #b3d4fc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            background-color: var(--title-bg);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin: 1rem 0;
+            padding: 0.5rem 0;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .architecture-card {
+            background-color: var(--box-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .diagram-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .arch-box {
+            position: absolute;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .arch-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+        
+        .arch-subtitle {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #666;
+        }
+        
+        .arch-frontend {
+            background-color: var(--frontend-color);
+            color: white;
+        }
+        
+        .arch-backend {
+            background-color: var(--backend-color);
+            color: white;
+        }
+        
+        .arch-database {
+            background-color: var(--database-color);
+            color: var(--dark-gray);
+        }
+        
+        .arch-external {
+            background-color: var(--external-color);
+            color: var(--dark-gray);
+        }
+        
+        /* Connection lines */
+        .connection {
+            position: absolute;
+            background-color: #ddd;
+            z-index: 1;
+        }
+        
+        .vertical {
+            width: 2px;
+        }
+        
+        .horizontal {
+            height: 2px;
+        }
+        
+        .component-list {
+            margin: 20px 0;
+        }
+        
+        .component-list h3 {
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .component-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .component-list li {
+            padding: 10px 15px;
+            margin: 5px 0;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .component-list li strong {
+            color: var(--secondary-color);
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-item {
+            background-color: var(--light-gray);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .arch-box {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>QuickExplore - System Architecture</h1>
+        </header>
+        
+        <div class="architecture-card">
+            <h2>High-Level System Architecture</h2>
+            
+            <div class="diagram-container" style="height: 600px;">
+                <!-- Client Layer -->
+                <div class="arch-box arch-frontend" style="top: 50px; left: 50%; transform: translateX(-50%); width: 80%; height: 100px;">
+                    <div class="arch-title">Client Layer</div>
+                    <div class="arch-subtitle">HTML/EJS, CSS, JavaScript - Browser-based User Interface</div>
+                </div>
+                
+                <!-- Server Layer -->
+                <div class="arch-box arch-backend" style="top: 200px; left: 50%; transform: translateX(-50%); width: 80%; height: 120px;">
+                    <div class="arch-title">Server Layer</div>
+                    <div class="arch-subtitle">Express.js, Node.js - REST API, Route Management, Authentication, Business Logic</div>
+                </div>
+                
+                <!-- Data Layer -->
+                <div class="arch-box arch-database" style="top: 370px; left: 50%; transform: translateX(-50%); width: 80%; height: 100px;">
+                    <div class="arch-title">Data Layer</div>
+                    <div class="arch-subtitle">MongoDB - Data Storage, Mongoose ODM</div>
+                </div>
+                
+                <!-- External Services -->
+                <div class="arch-box arch-external" style="top: 520px; left: 50%; transform: translateX(-50%); width: 80%; height: 80px;">
+                    <div class="arch-title">External Services</div>
+                    <div class="arch-subtitle">Cloudinary Image Storage, Connect-Mongo Session Store</div>
+                </div>
+                
+                <!-- Vertical connections -->
+                <div class="connection vertical" style="top: 150px; left: 50%; transform: translateX(-50%); height: 50px;"></div>
+                <div class="connection vertical" style="top: 320px; left: 50%; transform: translateX(-50%); height: 50px;"></div>
+                <div class="connection vertical" style="top: 470px; left: 50%; transform: translateX(-50%); height: 50px;"></div>
+            </div>
+            
+            <div class="tech-stack">
+                <div class="tech-item">Node.js</div>
+                <div class="tech-item">Express.js</div>
+                <div class="tech-item">MongoDB</div>
+                <div class="tech-item">Mongoose</div>
+                <div class="tech-item">EJS</div>
+                <div class="tech-item">HTML/CSS/JavaScript</div>
+                <div class="tech-item">bcrypt</div>
+                <div class="tech-item">express-session</div>
+                <div class="tech-item">connect-mongo</div>
+                <div class="tech-item">multer</div>
+                <div class="tech-item">Cloudinary</div>
+                <div class="tech-item">method-override</div>
+                <div class="tech-item">dotenv</div>
+            </div>
+        </div>
+        
+        <div class="architecture-card">
+            <h2>Detailed Component Architecture</h2>
+            
+            <div class="diagram-container" style="height: 800px;">
+                <!-- Client Components -->
+                <div class="arch-box arch-frontend" style="top: 50px; left: 20%; width: 200px; height: 80px;">
+                    <div class="arch-title">User Interface</div>
+                    <div class="arch-subtitle">EJS Templates</div>
+                </div>
+                
+                <div class="arch-box arch-frontend" style="top: 50px; right: 20%; width: 200px; height: 80px;">
+                    <div class="arch-title">Browser Logic</div>
+                    <div class="arch-subtitle">JavaScript/DOM</div>
+                </div>
+                
+                <!-- API Layer -->
+                <div class="arch-box arch-backend" style="top: 200px; left: 50%; transform: translateX(-50%); width: 400px; height: 80px;">
+                    <div class="arch-title">Express Router</div>
+                    <div class="arch-subtitle">Route Management, HTTP Methods</div>
+                </div>
+                
+                <!-- Backend Components -->
+                <div class="arch-box arch-backend" style="top: 330px; left: 20%; width: 180px; height: 80px;">
+                    <div class="arch-title">Authentication</div>
+                    <div class="arch-subtitle">bcrypt, Sessions</div>
+                </div>
+                
+                <div class="arch-box arch-backend" style="top: 330px; left: 50%; transform: translateX(-50%); width: 180px; height: 80px;">
+                    <div class="arch-title">Business Logic</div>
+                    <div class="arch-subtitle">Controllers</div>
+                </div>
+                
+                <div class="arch-box arch-backend" style="top: 330px; right: 20%; width: 180px; height: 80px;">
+                    <div class="arch-title">File Uploads</div>
+                    <div class="arch-subtitle">multer, Cloudinary</div>
+                </div>
+                
+                <!-- Data Access Layer -->
+                <div class="arch-box arch-backend" style="top: 460px; left: 50%; transform: translateX(-50%); width: 400px; height: 80px;">
+                    <div class="arch-title">Data Access Layer</div>
+                    <div class="arch-subtitle">Mongoose ODM, DB Queries</div>
+                </div>
+                
+                <!-- Database Collections -->
+                <div class="arch-box arch-database" style="top: 590px; left: 15%; width: 150px; height: 70px;">
+                    <div class="arch-title">Users</div>
+                    <div class="arch-subtitle">Authentication</div>
+                </div>
+                
+                <div class="arch-box arch-database" style="top: 590px; left: 35%; width: 150px; height: 70px;">
+                    <div class="arch-title">ListingPs</div>
+                    <div class="arch-subtitle">Tourist Places</div>
+                </div>
+                
+                <div class="arch-box arch-database" style="top: 590px; right: 35%; width: 150px; height: 70px;">
+                    <div class="arch-title">Vehicles/Rentals</div>
+                    <div class="arch-subtitle">Service Listings</div>
+                </div>
+                
+                <div class="arch-box arch-database" style="top: 590px; right: 15%; width: 150px; height: 70px;">
+                    <div class="arch-title">Bookings</div>
+                    <div class="arch-subtitle">Transactions</div>
+                </div>
+                
+                <!-- External Services -->
+                <div class="arch-box arch-external" style="top: 710px; left: 30%; width: 180px; height: 70px;">
+                    <div class="arch-title">Cloudinary</div>
+                    <div class="arch-subtitle">Image Storage</div>
+                </div>
+                
+                <div class="arch-box arch-external" style="top: 710px; right: 30%; width: 180px; height: 70px;">
+                    <div class="arch-title">Session Store</div>
+                    <div class="arch-subtitle">connect-mongo</div>
+                </div>
+                
+                <!-- Connection lines -->
+                <!-- UI to Router -->
+                <div class="connection vertical" style="top: 130px; left: 25%; height: 35px;"></div>
+                <div class="connection vertical" style="top: 130px; right: 25%; height: 35px;"></div>
+                <div class="connection horizontal" style="top: 165px; left: 25%; width: 50%;"></div>
+                <div class="connection vertical" style="top: 165px; left: 50%; height: 35px;"></div>
+                
+                <!-- Router to Components -->
+                <div class="connection vertical" style="top: 280px; left: 50%; height: 15px;"></div>
+                <div class="connection horizontal" style="top: 295px; left: 25%; width: 50%;"></div>
+                <div class="connection vertical" style="top: 295px; left: 25%; height: 35px;"></div>
+                <div class="connection vertical" style="top: 295px; left: 50%; height: 35px;"></div>
+                <div class="connection vertical" style="top: 295px; right: 25%; height: 35px;"></div>
+                
+                <!-- Components to DAL -->
+                <div class="connection vertical" style="top: 410px; left: 25%; height: 30px;"></div>
+                <div class="connection vertical" style="top: 410px; left: 50%; height: 50px;"></div>
+                <div class="connection vertical" style="top: 410px; right: 25%; height: 30px;"></div>
+                <div class="connection horizontal" style="top: 440px; left: 25%; width: 50%;"></div>
+                
+                <!-- DAL to Database -->
+                <div class="connection vertical" style="top: 540px; left: 50%; height: 15px;"></div>
+                <div class="connection horizontal" style="top: 555px; left: 15%; width: 70%;"></div>
+                <div class="connection vertical" style="top: 555px; left: 15%; height: 35px;"></div>
+                <div class="connection vertical" style="top: 555px; left: 35%; height: 35px;"></div>
+                <div class="connection vertical" style="top: 555px; right: 35%; height: 35px;"></div>
+                <div class="connection vertical" style="top: 555px; right: 15%; height: 35px;"></div>
+                
+                <!-- Database to External -->
+                <div class="connection vertical" style="top: 660px; left: 30%; height: 50px;"></div>
+                <div class="connection vertical" style="top: 660px; right: 30%; height: 50px;"></div>
+            </div>
+            
+            <div class="component-list">
+                <h3>Client Components</h3>
+                <ul>
+                    <li><strong>EJS Templates:</strong> View rendering for dynamic content</li>
+                    <li><strong>CSS Styling:</strong> Visual presentation and layout</li>
+                    <li><strong>Client JavaScript:</strong> Interactive UI elements and form validation</li>
+                </ul>
+                
+                <h3>Server Components</h3>
+                <ul>
+                    <li><strong>Express Router:</strong> Handles HTTP requests and route management</li>
+                    <li><strong>Authentication System:</strong> User registration, login, and session management</li>
+                    <li><strong>Business Logic:</strong> Core application functionality and data processing</li>
+                    <li><strong>Middleware:</strong> Request processing, error handling, and authentication checks</li>
+                    <li><strong>File Upload Handling:</strong> Processing and storing image uploads</li>
+                </ul>
+                
+                <h3>Data Models</h3>
+                <ul>
+                    <li><strong>User:</strong> Authentication and profile information</li>
+                    <li><strong>ListingP:</strong> Tourist place information and attractions</li>
+                    <li><strong>vehicleRequest:</strong> Vehicle listings from vehicle owners</li>
+                    <li><strong>rentalRequest:</strong> Accommodation listings from property owners</li>
+                    <li><strong>Driver:</strong> Driver profiles and vehicle assignments</li>
+                    <li><strong>Booking/RentalBooking:</strong> Reservation and booking management</li>
+                    <li><strong>Transaction:</strong> Payment and financial transaction records</li>
+                    <li><strong>UserChargesHistory:</strong> Record of user financial activities</li>
+                    <li><strong>CancellationCharges:</strong> Fee structures for booking cancellations</li>
+                </ul>
+                
+                <h3>External Services</h3>
+                <ul>
+                    <li><strong>MongoDB Database:</strong> Primary data storage</li>
+                    <li><strong>Cloudinary:</strong> Cloud image storage and management</li>
+                    <li><strong>Connect-Mongo:</strong> Session storage for user authentication</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="architecture-card">
+            <h2>Data Flow Architecture</h2>
+            
+            <div class="diagram-container" style="height: 500px;">
+                <!-- Client -->
+                <div class="arch-box arch-frontend" style="top: 50px; left: 50%; transform: translateX(-50%); width: 250px; height: 80px;">
+                    <div class="arch-title">Client Browser</div>
+                    <div class="arch-subtitle">User Interface</div>
+                </div>
+                
+                <!-- Express Server -->
+                <div class="arch-box arch-backend" style="top: 200px; left: 50%; transform: translateX(-50%); width: 250px; height: 80px;">
+                    <div class="arch-title">Express Server</div>
+                    <div class="arch-subtitle">Application Logic</div>
+                </div>
+                
+                <!-- Data Stores -->
+                <div class="arch-box arch-database" style="top: 350px; left: 25%; width: 200px; height: 80px;">
+                    <div class="arch-title">MongoDB</div>
+                    <div class="arch-subtitle">Data Storage</div>
+                </div>
+                
+                <div class="arch-box arch-external" style="top: 350px; right: 25%; width: 200px; height: 80px;">
+                    <div class="arch-title">Cloudinary</div>
+                    <div class="arch-subtitle">Media Storage</div>
+                </div>
+                
+                <!-- Connection arrows -->
+                <div class="connection vertical" style="top: 130px; left: 50%; transform: translateX(-50%); height: 70px;"></div>
+                
+                <div class="connection vertical" style="top: 280px; left: 50%; transform: translateX(-50%); height: 20px;"></div>
+                <div class="connection horizontal" style="top: 300px; left: 25%; width: 50%;"></div>
+                <div class="connection vertical" style="top: 300px; left: 25%; height: 50px;"></div>
+                <div class="connection vertical" style="top: 300px; right: 25%; height: 50px;"></div>
+                
+                <!-- Flow labels -->
+                <div style="position: absolute; top: 150px; left: 53%; font-size: 0.8rem; color: #666;">HTTP Requests</div>
+                <div style="position: absolute; top: 150px; right: 53%; font-size: 0.8rem; color: #666;">HTTP Responses</div>
+                
+                <div style="position: absolute; top: 310px; left: 28%; font-size: 0.8rem; color: #666;">Queries</div>
+                <div style="position: absolute; top: 310px; right: 28%; font-size: 0.8rem; color: #666;">Upload/Retrieve</div>
+            </div>
+            
+            <h3>Key Data Flows</h3>
+            <ul>
+                <li><strong>User Authentication Flow:</strong> Client submits credentials → Server validates → Session created → Response sent</li>
+                <li><strong>Listing Creation Flow:</strong> Owner submits listing → Images uploaded to Cloudinary → Data stored in MongoDB → Confirmation returned</li>
+                <li><strong>Search & Discovery Flow:</strong> User submits search → Server queries database → Results processed → Formatted response returned</li>
+                <li><strong>Booking Flow:</strong> User initiates booking → Availability checked → Transaction processed → Booking confirmation sent</li>
+                <li><strong>Admin Approval Flow:</strong> Admin reviews listing → Update approval status → Notification generated → Status updated</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>QuickExplore - System Architecture</p>
+        </footer>
+    </div>
+</body>
+</html> 

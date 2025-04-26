@@ -1,0 +1,798 @@
+<%- include("../includes/navbar.ejs") %>
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<!-- AOS - Animate on scroll library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    :root {
+        --primary: #4a90e2;
+        --secondary: #7952b3;
+        --accent: #ff7e5f;
+        --accent-hover: #ff6347;
+        --dark: #2c3e50;
+        --light: #f8f9fa;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+        --text-dark: #343a40;
+        --text-muted: #6c757d;
+        --border-radius-sm: 8px;
+        --border-radius-md: 15px;
+        --border-radius-lg: 30px;
+        --box-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --box-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
+        --box-shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.1);
+        --transition-fast: all 0.2s ease;
+        --transition-normal: all 0.3s ease;
+        --transition-slow: all 0.5s ease;
+    }
+
+    /* Global styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--light);
+        overflow-x: hidden;
+        position: relative;
+        color: var(--text-dark);
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, rgba(135, 206, 250, 0.05) 0%, rgba(121, 82, 179, 0.05) 100%);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        z-index: -1;
+    }
+
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .container {
+        max-width: 1200px;
+        padding: 0 20px;
+    }
+
+    /* Header and hero section */
+    .hero-section {
+        padding: 40px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+    }
+
+    /* Search bar style (Ultra-modern) */
+    .search-container {
+        position: relative;
+        margin: 20px auto 50px;
+        max-width: 850px;
+    }
+
+    .search-bar {
+        position: relative;
+        background: white;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--box-shadow-md);
+        transition: var(--transition-normal);
+        overflow: hidden;
+        padding: 8px 8px 8px 60px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(5px);
+    }
+
+    .search-bar:hover, .search-bar:focus-within {
+        box-shadow: var(--box-shadow-lg);
+        transform: translateY(-2px);
+        border-color: var(--secondary);
+    }
+
+    .search-bar input {
+        width: calc(100% - 40px);
+        padding: 15px 20px;
+        border: none;
+        font-size: 16px;
+        outline: none;
+        background: transparent;
+    }
+
+    .search-bar::before {
+        content: "\f002";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--secondary);
+        font-size: 20px;
+        z-index: 1;
+    }
+
+    .search-btn {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        opacity: 0;
+        transition: var(--transition-normal);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-btn:hover {
+        background: rgba(0,0,0,0.05);
+        color: var(--accent);
+    }
+
+    .search-bar:focus-within .search-btn,
+    .search-bar.has-value .search-btn {
+        opacity: 1;
+    }
+
+    /* Advanced 3D Pulse animation */
+    .search-pulse {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(121, 82, 179, 0.2);
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 0;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: translateY(-50%) scale(0.6);
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+        100% {
+            transform: translateY(-50%) scale(1.6);
+            opacity: 0;
+        }
+    }
+
+    /* Category scroll section - Modern UI */
+    .category-section {
+        position: relative;
+        margin-bottom: 50px;
+    }
+
+    .category-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .scroll-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 18px;
+        color: var(--dark);
+        cursor: pointer;
+        box-shadow: var(--box-shadow-sm);
+        margin: 0 10px;
+        transition: var(--transition-normal);
+        z-index: 10;
+    }
+
+    .scroll-btn:hover {
+        transform: scale(1.1);
+        box-shadow: var(--box-shadow-md);
+        background: var(--secondary);
+        color: white;
+    }
+
+    .category-scrollbar {
+        display: flex;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        gap: 15px;
+        flex: 1;
+        padding: 10px 0;
+        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;  /* IE and Edge */
+    }
+
+    .category-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+
+    .category-item {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 20px;
+        background: white;
+        border-radius: var(--border-radius-md);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: var(--transition-normal);
+        box-shadow: var(--box-shadow-sm);
+        user-select: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-item i {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+        transition: var(--transition-normal);
+        position: relative;
+        z-index: 2;
+    }
+
+    .category-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(120deg, var(--secondary), var(--primary));
+        opacity: 0;
+        transition: var(--transition-normal);
+        border-radius: var(--border-radius-md);
+        z-index: 1;
+    }
+
+    .category-item span {
+        position: relative;
+        z-index: 2;
+    }
+
+    .category-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-md);
+    }
+
+    .category-item:hover::before {
+        opacity: 0.1;
+    }
+
+    .category-item:hover i,
+    .category-item:hover span {
+        color: var(--secondary);
+    }
+
+    .category-item.active {
+        color: white;
+        font-weight: 600;
+    }
+
+    .category-item.active::before {
+        opacity: 1;
+    }
+
+    .category-item.active i,
+    .category-item.active span {
+        color: white;
+    }
+
+    /* All category button - special styling */
+    .category-item.all-category {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        margin-right: 10px;
+        color: white;
+    }
+
+    .category-item.all-category i {
+        color: white;
+    }
+
+    .category-item.all-category:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-md);
+    }
+
+    /* Modern card layout */
+    .places-grid {
+        position: relative;
+    }
+    
+    .place-card {
+        margin-bottom: 30px;
+        transition: var(--transition-normal);
+        height: 100%;
+    }
+
+    .place-card .card {
+        height: 100%;
+        border: none;
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--box-shadow-sm);
+        transition: var(--transition-normal);
+        overflow: hidden;
+        position: relative;
+        background: white;
+    }
+    
+    .place-card:hover .card {
+        transform: translateY(-10px);
+        box-shadow: var(--box-shadow-lg);
+    }
+
+    .place-card .img-container {
+        position: relative;
+        overflow: hidden;
+        height: 250px;
+    }
+
+    .place-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition-normal);
+    }
+
+    .place-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .place-card .category-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: var(--border-radius-lg);
+        backdrop-filter: blur(5px);
+    }
+
+    .place-card .card-body {
+        padding: 20px;
+    }
+
+    .place-card .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        line-height: 1.4;
+        color: var(--dark);
+    }
+
+    .place-card .info-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        color: var(--text-muted);
+    }
+
+    .place-card .info-icon {
+        margin-right: 10px;
+        color: var(--secondary);
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+    }
+
+    .place-card .btn-view {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: var(--border-radius-lg);
+        padding: 12px 20px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        font-size: 14px;
+        transition: var(--transition-normal);
+        width: 100%;
+        z-index: 1;
+    }
+
+    .place-card .btn-view::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, var(--secondary), var(--accent));
+        transition: var(--transition-normal);
+        z-index: -1;
+    }
+
+    .place-card .btn-view:hover {
+        box-shadow: 0 5px 15px rgba(121, 82, 179, 0.4);
+    }
+
+    .place-card .btn-view:hover::before {
+        left: 0;
+    }
+
+    /* Empty state */
+    .no-results {
+        text-align: center;
+        padding: 80px 20px;
+        display: none;
+    }
+    
+    .no-results i {
+        font-size: 60px;
+        color: var(--secondary);
+        opacity: 0.3;
+        margin-bottom: 20px;
+    }
+    
+    .no-results h3 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--dark);
+    }
+    
+    .no-results p {
+        color: var(--text-muted);
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Footer section */
+    .explore-footer {
+        text-align: center;
+        padding: 30px 0;
+        margin-top: 50px;
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+
+    /* Loading state */
+    .loading-container {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 0;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(121, 82, 179, 0.2);
+        border-radius: 50%;
+        border-top-color: var(--secondary);
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* Responsive layout */
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        .category-item {
+            padding: 10px 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+        .places-grid .col-md-4 {
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-title {
+            font-size: 1.5rem;
+        }
+        .places-grid .col-md-4 {
+            width: 100%;
+        }
+        .search-bar {
+            padding-left: 50px;
+        }
+        .search-bar::before {
+            left: 15px;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section" data-aos="fade-up">
+            <h1 class="hero-title animate__animated animate__fadeInUp">Explore Tourist Attractions in Telangana</h1>
+            <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">Discover beautiful places, hidden gems and unforgettable experiences</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container" data-aos="fade-up" data-aos-delay="200">
+            <div class="search-bar">
+                <div class="search-pulse"></div>
+                <input type="text" id="searchInput" placeholder="Search by name, location or category...">
+                <button class="search-btn" id="clearSearch" title="Clear search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Scroll Section -->
+        <div class="category-section" data-aos="fade-up" data-aos-delay="300">
+            <div class="category-wrapper">
+                <button class="scroll-btn" id="scrollLeft"><i class="fas fa-chevron-left"></i></button>
+                
+                <div class="category-item all-category active" data-category="All">
+                    <i class="fas fa-th-large"></i>
+                    <span>All</span>
+                </div>
+                
+                <div class="category-scrollbar" id="categoryBar">
+                    <% const categories = [
+                        { name: "Monument", icon: "fa-landmark" },
+                        { name: "Waterfall", icon: "fa-water" },
+                        { name: "Temple", icon: "fa-place-of-worship" },
+                        { name: "Famous City", icon: "fa-city" },
+                        { name: "Trekking", icon: "fa-hiking" },
+                        { name: "Festival", icon: "fa-fire" },
+                        { name: "Museum", icon: "fa-university" },
+                        { name: "Wildlife", icon: "fa-paw" },
+                        { name: "Park & Garden", icon: "fa-tree" },
+                        { name: "Lake & Dam", icon: "fa-water" },
+                        { name: "Heritage Site", icon: "fa-archway" },
+                        { name: "Adventure", icon: "fa-mountain" },
+                        { name: "Shopping", icon: "fa-shopping-bag" },
+                        { name: "Cultural Site", icon: "fa-theater-masks" },
+                        { name: "Beach & Coast", icon: "fa-umbrella-beach" },
+                        { name: "Local Cuisine", icon: "fa-utensils" }
+                    ]; %>
+                    <% categories.forEach(cat => { %>
+                        <div class="category-item" data-category="<%= cat.name %>">
+                            <i class="fas <%= cat.icon %>"></i>
+                            <span><%= cat.name %></span>
+                        </div>
+                    <% }) %>
+                </div>
+
+                <button class="scroll-btn" id="scrollRight"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+<hr>
+        <!-- Loading spinner -->
+        <div class="loading-container" id="loadingSpinner">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Place Cards -->
+        <div class="row places-grid" id="placesList">
+            <% places.forEach((place, index) => { %>
+                <div class="col-md-4 place-card" data-aos="fade-up" data-aos-delay="<%= index * 100 %>">
+                    <div class="card">
+                        <div class="img-container">
+                            <img src="/images/<%= place.title %>.jpeg" class="card-img-top" alt="<%= place.title %>">
+                            <span class="category-badge"><%= place.type %></span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= place.title %></h5>
+                            <div class="info-row">
+                                <i class="fas fa-map-marker-alt info-icon"></i>
+                                <span><%= place.location %></span>
+                            </div>
+                            <div class="info-row">
+                                <i class="fas fa-tag info-icon"></i>
+                                <span><%= place.type %></span>
+                            </div>
+                            <form action="/listings/<%= place._id %>/viewP">
+                                <button class="btn-view">
+                                    <i class="fas fa-eye me-2"></i>View Details
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- No results message -->
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>No places found</h3>
+            <p>We couldn't find any places matching your search criteria. Try adjusting your search or browse all categories.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="explore-footer" data-aos="fade-up">
+            <p>© 2025 Quick Explore. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // DOM elements
+        const categoryBar = document.getElementById('categoryBar');
+        const placesList = document.getElementById('placesList');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const categoryItems = document.querySelectorAll('.category-item');
+        const placeCards = document.querySelectorAll('.place-card');
+        const clearSearchBtn = document.getElementById('clearSearch');
+
+        // Category Scroll buttons
+        document.getElementById('scrollLeft').addEventListener('click', () => {
+            categoryBar.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+        
+        document.getElementById('scrollRight').addEventListener('click', () => {
+            categoryBar.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+
+        // Show clear button when search has value
+        searchInput.addEventListener('input', function() {
+            if (this.value) {
+                this.parentElement.classList.add('has-value');
+            } else {
+                this.parentElement.classList.remove('has-value');
+            }
+        });
+
+        // Clear search function
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchInput.parentElement.classList.remove('has-value');
+            filterPlaces();
+            searchInput.focus();
+        });
+
+        // Filtering function
+        function filterPlaces() {
+            const query = searchInput.value.toLowerCase();
+            const activeCategory = document.querySelector('.category-item.active')?.getAttribute('data-category') || 'All';
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'flex';
+            
+            // Hide all cards first
+            placeCards.forEach(card => card.style.display = 'none');
+            
+            // Simulate loading delay for better UX
+            setTimeout(() => {
+                let visibleCount = 0;
+                
+                placeCards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    // Get the exact category text from the category badge and the type info row
+                    const categoryBadge = card.querySelector(".category-badge")?.innerText.toLowerCase().trim();
+                    const typeBadge = card.querySelector(".info-row:nth-child(2) span")?.innerText.toLowerCase().trim();
+                    
+                    // Check if the card text contains the search query
+                    let shouldShow = text.includes(query);
+                    
+                    // Apply category filter if not "All"
+                    if (activeCategory !== 'All') {
+                        const categoryToMatch = activeCategory.toLowerCase();
+                        // Match against both category badge and type info
+                        shouldShow = shouldShow && (
+                            (categoryBadge && categoryBadge === categoryToMatch) || 
+                            (typeBadge && typeBadge === categoryToMatch)
+                        );
+                    }
+                    
+                    if (shouldShow) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                        
+                        // Reset then add animation when cards appear
+                        card.classList.remove('animate__animated', 'animate__fadeInUp');
+                        void card.offsetWidth; // Trigger reflow to restart animation
+                        card.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+                
+                // Show/hide no results message
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+                
+                // Hide loading spinner
+                loadingSpinner.style.display = 'none';
+            }, 300);
+        }
+
+        // Live Search
+        searchInput.addEventListener('input', filterPlaces);
+
+        // Category Filter on Click
+        categoryItems.forEach(item => {
+            // Single event listener for the entire category item including its children
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                categoryItems.forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Apply filters
+                filterPlaces();
+                
+                // Scroll to the active category into view if needed
+                this.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            });
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Apply initial animation to cards
+            placeCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate__animated', 'animate__fadeInUp');
+                }, index * 100);
+            });
+        });
+    </script>
+</body>

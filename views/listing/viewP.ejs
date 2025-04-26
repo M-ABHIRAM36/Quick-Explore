@@ -1,0 +1,744 @@
+<%- include("../includes/navbar.ejs") %>
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<!-- AOS - Animate on scroll library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- Magnific Popup - For image gallery -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+
+<!-- CSS for Styling -->
+<style>
+    :root {
+        --primary: #4a90e2;
+        --primary-dark: #3a7bc8;
+        --secondary: #7952b3;
+        --accent: #ff7e5f;
+        --accent-hover: #ff6347;
+        --dark: #2c3e50;
+        --light: #f8f9fa;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --danger: #dc3545;
+        --gray-100: #f8f9fa;
+        --gray-200: #e9ecef;
+        --gray-300: #dee2e6;
+        --gray-400: #ced4da;
+        --gray-500: #adb5bd;
+        --gray-600: #6c757d;
+        --gray-700: #495057;
+        --gray-800: #343a40;
+        --gray-900: #212529;
+        --border-radius-sm: 8px;
+        --border-radius-md: 15px;
+        --border-radius-lg: 30px;
+        --box-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+        --box-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.1);
+        --box-shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.1);
+        --transition-fast: all 0.2s ease;
+        --transition-normal: all 0.3s ease;
+        --transition-slow: all 0.5s ease;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--light);
+        color: var(--gray-800);
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, rgba(135, 206, 250, 0.05) 0%, rgba(121, 82, 179, 0.05) 100%);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+        z-index: -1;
+    }
+
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .container {
+        max-width: 1200px;
+        padding: 0 20px;
+    }
+
+    /* Back Button */
+    .back-button-container {
+        position: relative;
+        margin-top: 30px;
+        margin-left: 30px;
+        z-index: 10;
+    }
+
+    .btn-back {
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: var(--border-radius-md);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--box-shadow-md);
+        transition: var(--transition-normal);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-back::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, var(--secondary), var(--accent));
+        transition: var(--transition-normal);
+        z-index: -1;
+    }
+
+    .btn-back:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--box-shadow-lg);
+    }
+
+    .btn-back:hover::before {
+        left: 0;
+    }
+
+    .btn-back i {
+        font-size: 18px;
+        transition: transform 0.3s ease;
+    }
+
+    .btn-back:hover i {
+        transform: translateX(-5px);
+    }
+
+    /* Header Section */
+    .place-header {
+        padding: 40px 0;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 50px;
+        background: linear-gradient(120deg, rgba(74, 144, 226, 0.1), rgba(121, 82, 179, 0.1));
+        border-radius: var(--border-radius-lg);
+    }
+
+    .place-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%237952b3' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        opacity: 0.5;
+        z-index: 0;
+    }
+
+    .place-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+    }
+
+    .place-location {
+        font-size: 1.2rem;
+        color: var(--gray-600);
+        font-weight: 400;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .place-location i {
+        color: var(--accent);
+    }
+
+    /* Image Gallery */
+    .image-container {
+        position: relative;
+        margin-bottom: 60px;
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--box-shadow-lg);
+    }
+
+    .place-image {
+        width: 100%;
+        height: 450px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+        border-radius: var(--border-radius-lg);
+    }
+
+    .image-container:hover .place-image {
+        transform: scale(1.03);
+    }
+
+    .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        padding: 30px 20px 20px;
+        color: white;
+        border-bottom-left-radius: var(--border-radius-lg);
+        border-bottom-right-radius: var(--border-radius-lg);
+    }
+
+    .image-overlay h3 {
+        font-weight: 600;
+        margin-bottom: 5px;
+        font-size: 1.5rem;
+    }
+
+    .image-overlay p {
+        opacity: 0.9;
+        font-size: 0.9rem;
+    }
+
+    /* Content Section */
+    .content-container {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--box-shadow-md);
+        padding: 40px;
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .section-title i {
+        color: var(--primary);
+    }
+
+    .description-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--gray-700);
+        margin-bottom: 20px;
+    }
+
+    /* Details Cards */
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .detail-card {
+        background: var(--gray-100);
+        border-radius: var(--border-radius-md);
+        padding: 20px;
+        transition: var(--transition-normal);
+        border-left: 4px solid var(--primary);
+    }
+
+    .detail-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-md);
+    }
+
+    .detail-card:nth-child(2) {
+        border-left-color: var(--secondary);
+    }
+
+    .detail-card:nth-child(3) {
+        border-left-color: var(--accent);
+    }
+
+    .detail-card:nth-child(4) {
+        border-left-color: var(--info);
+    }
+
+    .detail-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        font-weight: 600;
+        color: var(--gray-700);
+    }
+
+    .detail-title i {
+        color: var(--primary);
+        font-size: 18px;
+    }
+
+    .detail-card:nth-child(2) .detail-title i {
+        color: var(--secondary);
+    }
+
+    .detail-card:nth-child(3) .detail-title i {
+        color: var(--accent);
+    }
+
+    .detail-card:nth-child(4) .detail-title i {
+        color: var(--info);
+    }
+
+    .detail-content {
+        padding: 12px 15px;
+        background: white;
+        border-radius: var(--border-radius-sm);
+        font-weight: 500;
+        color: var(--gray-700);
+    }
+
+    /* Nearby Attractions */
+    .attractions-list {
+        margin-top: 20px;
+    }
+
+    .attraction-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        background: white;
+        border-radius: var(--border-radius-sm);
+        margin-bottom: 10px;
+        transition: var(--transition-normal);
+        border-left: 3px solid var(--secondary);
+    }
+
+    .attraction-item:hover {
+        transform: translateX(5px);
+        box-shadow: var(--box-shadow-sm);
+    }
+
+    .attraction-icon {
+        min-width: 30px;
+        height: 30px;
+        background: rgba(121, 82, 179, 0.1);
+        color: var(--secondary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 50px;
+        margin-bottom: 70px;
+    }
+
+    .action-btn {
+        flex: 1;
+        min-width: 200px;
+        max-width: 300px;
+        position: relative;
+        overflow: hidden;
+        padding: 15px 25px;
+        border-radius: var(--border-radius-md);
+        border: none;
+        font-weight: 500;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: var(--transition-normal);
+        z-index: 1;
+        color: white;
+        box-shadow: var(--box-shadow-sm);
+    }
+
+    .action-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        transition: var(--transition-normal);
+        z-index: -1;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-md);
+    }
+
+    .action-btn:hover::before {
+        left: 0;
+    }
+
+    .action-btn i {
+        font-size: 1.1rem;
+    }
+
+    .btn-vehicle {
+        background: linear-gradient(120deg, var(--success), #43b060);
+    }
+
+    .btn-vehicle::before {
+        background: linear-gradient(120deg, #43b060, #56c274);
+    }
+
+    .btn-rooms {
+        background: linear-gradient(120deg, var(--primary), #5fa0e6);
+    }
+
+    .btn-rooms::before {
+        background: linear-gradient(120deg, #5fa0e6, #7ab2eb);
+    }
+
+    .btn-map {
+        background: linear-gradient(120deg, var(--info), #2cb1cc);
+    }
+
+    .btn-map::before {
+        background: linear-gradient(120deg, #2cb1cc, #48c5dd);
+    }
+
+    .btn-share {
+        background: linear-gradient(120deg, var(--warning), #ffd03b);
+    }
+
+    .btn-share::before {
+        background: linear-gradient(120deg, #ffd03b, #ffe066);
+    }
+
+    /* Wikipedia Button */
+    .wikipedia-btn {
+        display: inline-block;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 15px 35px;
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: var(--border-radius-lg);
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        box-shadow: var(--box-shadow-md);
+        transition: var(--transition-normal);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+    }
+
+    .wikipedia-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, var(--secondary), var(--accent));
+        transition: var(--transition-normal);
+        z-index: -1;
+    }
+
+    .wikipedia-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-lg);
+        color: white;
+    }
+
+    .wikipedia-btn:hover::before {
+        left: 0;
+    }
+
+    /* Footer */
+    .place-footer {
+        text-align: center;
+        padding: 30px 0;
+        margin-top: 50px;
+        color: var(--gray-600);
+        font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .place-title {
+            font-size: 2.5rem;
+        }
+        .place-image {
+            height: 380px;
+        }
+        .details-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .place-title {
+            font-size: 2rem;
+        }
+        .place-location {
+            font-size: 1rem;
+        }
+        .place-image {
+            height: 320px;
+        }
+        .content-container {
+            padding: 30px;
+        }
+        .action-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        .action-btn {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .place-title {
+            font-size: 1.8rem;
+        }
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+        .place-image {
+            height: 260px;
+        }
+        .content-container {
+            padding: 20px;
+        }
+    }
+</style>
+
+<!-- Back Button -->
+<div class="back-button-container animate__animated animate__fadeInLeft">
+    <button class="btn-back" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i> Back
+    </button>
+</div>
+
+<!-- Main container to hold all content -->
+<div class="container">
+    <!-- Header Section -->
+    <header class="place-header text-center animate__animated animate__fadeInDown" data-aos="fade-up">
+        <h1 class="place-title"><%= place[0].title %></h1>
+        <p class="place-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <%= place[0].location %>, Pincode: <%= place[0].pincode %>
+        </p>
+    </header>
+
+    <!-- Image Section with overlay -->
+    <div class="image-container" data-aos="fade-up" data-aos-delay="100">
+        <img src="/images/<%= place[0].title %>.jpeg" class="place-image" alt="<%= place[0].title %>">
+        <div class="image-overlay">
+            <h3><%= place[0].title %></h3>
+            <p><i class="fas fa-map-pin"></i> <%= place[0].location %></p>
+        </div>
+    </div>
+
+    <!-- Details Content -->
+    <div class="content-container" data-aos="fade-up" data-aos-delay="200">
+        <!-- Description Section -->
+        <div class="description-section">
+            <h2 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                Description
+            </h2>
+            <p class="description-text"><%= place[0].description %></p>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="details-grid">
+            <div class="detail-card" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="detail-title">
+                    <i class="fas fa-tag"></i>
+                    Type
+                </h3>
+                <div class="detail-content">
+                    <%= place[0].type %>
+                </div>
+            </div>
+
+            <div class="detail-card" data-aos="fade-up" data-aos-delay="400">
+                <h3 class="detail-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Best Time to Visit
+                </h3>
+                <div class="detail-content">
+                    <%= place[0].bestTimeToVisit %>
+                </div>
+            </div>
+
+            <div class="detail-card" data-aos="fade-up" data-aos-delay="500">
+                <h3 class="detail-title">
+                    <i class="fas fa-ticket-alt"></i>
+                    Entry Fee
+                </h3>
+                <div class="detail-content">
+                    <%= place[0].entryFee %>
+                </div>
+            </div>
+
+            <div class="detail-card" data-aos="fade-up" data-aos-delay="500">
+                <h3 class="detail-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Nearby Attractions
+                </h3>
+                <% if (place[0].nearbyAttractions.length > 0) { %>
+                    <div class="attractions-list">
+                        <% place[0].nearbyAttractions.forEach(function(attraction) { %>
+                            <div class="attraction-item">
+                                <div class="attraction-icon">
+                                    <i class="fas fa-map-signs"></i>
+                                </div>
+                                <%= attraction %>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <div class="detail-content">
+                        No nearby attractions listed.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wiki Link -->
+    <div class="text-center" data-aos="fade-up" data-aos-delay="500">
+        <a href="https://en.wikipedia.org/wiki/<%= place[0].title %>" class="wikipedia-btn" target="_blank">
+            <i class="fab fa-wikipedia-w me-2"></i> Explore More on Wikipedia
+        </a>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div class="action-buttons" data-aos="fade-up" data-aos-delay="500">
+        <!-- Book Vehicle Button -->
+        <a href="/book-vehicle?place=<%= encodeURIComponent(place[0].title) %>" class="action-btn btn-vehicle">
+            <i class="fas fa-car"></i> Book Vehicle
+        </a>
+
+        <!-- Book Rooms Nearby Button -->
+        <a href="/book-rooms?place=<%= encodeURIComponent(place[0].title) %>" class="action-btn btn-rooms">
+            <i class="fas fa-hotel"></i> Book Rooms Nearby
+        </a>
+
+        <!-- View on Map Button -->
+        <a href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(place[0].title + ' ' + place[0].location + ' ' + place[0].pincode) %>" 
+            target="_blank" class="action-btn btn-map">
+            <i class="fas fa-map-marker-alt"></i> View on Map
+        </a>
+
+        <!-- Share Button -->
+        <button class="action-btn btn-share" onclick="sharePlace()">
+            <i class="fas fa-share-alt"></i> Share
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="place-footer">
+        <p>© <%= new Date().getFullYear() %> Quick Explore. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true
+    });
+
+    // Share functionality
+    function sharePlace() {
+        if (navigator.share) {
+            navigator.share({
+                title: "<%= place[0].title %>",
+                text: "Check out this amazing place: <%= place[0].title %>",
+                url: window.location.href
+            }).catch(error => console.log("Error sharing:", error));
+        } else {
+            alert("Sharing not supported on this browser. Copy the URL to share!");
+        }
+    }
+
+    // Add scroll animation for back button
+    window.addEventListener('scroll', function() {
+        const backButton = document.querySelector('.btn-back');
+        if (window.scrollY > 100) {
+            backButton.style.transform = 'scale(0.9)';
+        } else {
+            backButton.style.transform = 'scale(1)';
+        }
+    });
+
+    // Add hover effect for image
+    document.addEventListener('DOMContentLoaded', function() {
+        const placeImage = document.querySelector('.place-image');
+        placeImage.addEventListener('mousemove', function(e) {
+            const x = e.clientX - this.getBoundingClientRect().left;
+            const y = e.clientY - this.getBoundingClientRect().top;
+            
+            const centerX = this.offsetWidth / 2;
+            const centerY = this.offsetHeight / 2;
+            
+            const moveX = (x - centerX) / 20;
+            const moveY = (y - centerY) / 20;
+            
+            this.style.transform = `scale(1.03) translate(${moveX}px, ${moveY}px)`;
+        });
+        
+        placeImage.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+</script>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+
+
+

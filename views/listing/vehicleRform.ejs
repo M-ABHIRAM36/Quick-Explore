@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Request Form - Quick Explore</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --light-gray: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --form-bg: #ffffff;
+            --accent-color: #7952b3;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            font-family: 'Poppins', sans-serif;
+            padding-top: 70px;
+            background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+        }
+        
+        .navbar {
+            background: var(--secondary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+        }
+        
+        .nav-link.active {
+            color: white !important;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"><path fill="none" stroke="white" stroke-width="1" d="M20,20 L80,80 M0,40 L40,0 M60,0 L0,60 M80,20 L20,80" stroke-opacity="0.1"/></svg>');
+            background-size: 40px;
+            opacity: 0.3;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+        
+        .form-card {
+            background: var(--form-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--accent-color), #4a4a8a);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            font-weight: 600;
+            border: none;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 3px rgba(121, 82, 179, 0.25);
+            border-color: var(--accent-color);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-icon {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            color: var(--accent-color);
+        }
+        
+        .icon-input {
+            padding-left: 40px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(to right, var(--accent-color), #4a4a8a);
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(121, 82, 179, 0.3);
+            margin-top: 1rem;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(121, 82, 179, 0.5);
+            color: white;
+        }
+        
+        .btn-home {
+            background: linear-gradient(to right, var(--primary-color), #2773c3);
+            border: none;
+            border-radius: 50px;
+            padding: 0.7rem 1.5rem;
+            font-weight: 500;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.5);
+            color: white;
+        }
+        
+        .btn-home i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-home:hover i {
+            transform: rotate(360deg);
+        }
+        
+        .form-section {
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-section-title {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-section-title i {
+            margin-right: 10px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .date-inputs {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .date-inputs .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .date-inputs {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/places2">
+                <i class="fas fa-map-marked-alt me-2"></i> Quick Explore
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/places2"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-car me-1"></i> List Vehicle</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header animate__animated animate__fadeIn">
+            <h1 class="display-5 mb-2"><i class="fas fa-car me-3"></i>Submit Your Vehicle</h1>
+            <p class="lead">Fill out the form below to list your vehicle on Quick Explore</p>
+        </div>
+        
+        <div class="container mt-3">
+            <form action="/places2" method="get">
+                <button class="btn-home animate__animated animate__fadeInLeft">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+            </form>
+        </div>
+
+        <div class="form-container animate__animated animate__fadeInUp">
+            <div class="form-card">
+                <div class="card-header">
+                    <h4 class="m-0"><i class="fas fa-clipboard-list me-2"></i>Vehicle Rental Form</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/requestForms/vehicleForms" method="POST" enctype="multipart/form-data" id="vehicleForm">
+                        <div class="form-section">
+                            <div class="form-section-title">
+                                <i class="fas fa-user-circle"></i> Owner Information
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col form-group">
+                                    <label class="form-label">Owner Name</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-user form-icon"></i>
+                                        <input type="text" name="ownerName" id="ownerName" class="form-control icon-input" placeholder="Enter your full name (5-15 characters, letters only)" required>
+                                        <small id="ownerNameError" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                                <div class="form-col form-group">
+                                    <label class="form-label">Contact Number</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-phone form-icon"></i>
+                                        <input type="text" name="contact" id="contact" class="form-control icon-input" placeholder="Enter your phone number (10 digits)" required>
+                                        <small id="contactError" class="form-text text-danger"></small>
+                                        <small class="form-text text-muted">Format: 10 digits starting with 6-9 (e.g., 9876543210)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <div class="position-relative">
+                                    <i class="fas fa-envelope form-icon"></i>
+                                    <input type="email" name="email" id="email" class="form-control icon-input" placeholder="Enter your email address (Gmail only)">
+                                    <small id="emailError" class="form-text text-danger"></small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="form-section-title">
+                                <i class="fas fa-car"></i> Vehicle Details
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col form-group">
+                                    <label class="form-label">Vehicle Type</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-car-side form-icon"></i>
+                                        <select name="vehicleType" class="form-select icon-input" required>
+                                            <option value="" selected disabled>Select vehicle type</option>
+                                            <option value="2-Wheeler">2-Wheeler</option>
+                                            <option value="3-Wheeler">3-Wheeler</option>
+                                            <option value="4-Wheeler">4-Wheeler</option>
+                                            <option value="Bus-ac">Bus-AC</option>
+                                            <option value="Bus-non ac">Bus-Non AC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-col form-group">
+                                    <label class="form-label">Rental Price Per Day (₹)</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-rupee-sign form-icon"></i>
+                                        <input type="number" name="rentalPricePerDay" class="form-control icon-input" placeholder="Enter rental price per day" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col form-group">
+                                    <label class="form-label">Brand</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-tag form-icon"></i>
+                                        <input type="text" name="brand" id="brand" class="form-control icon-input" placeholder="Enter vehicle brand" required>
+                                        <small id="brandError" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                                <div class="form-col form-group">
+                                    <label class="form-label">Model</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-info-circle form-icon"></i>
+                                        <input type="text" name="model" id="model" class="form-control icon-input" placeholder="Enter vehicle model" required>
+                                        <small id="modelError" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Registration Number</label>
+                                <div class="position-relative">
+                                    <i class="fas fa-id-card form-icon"></i>
+                                    <input type="text" name="registrationNumber" id="regNumber" class="form-control icon-input" placeholder="Enter vehicle registration number" required>
+                                    <small id="regNumberError" class="form-text text-danger"></small>
+                                    <small class="form-text text-muted">Format: XX00XX0000 (e.g., TS02AB1234)</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="form-section-title">
+                                <i class="fas fa-map-marked-alt"></i> Location & Availability
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col form-group">
+                                    <label class="form-label">Location</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-map-marker-alt form-icon"></i>
+                                        <input type="text" name="location" class="form-control icon-input" placeholder="Enter vehicle location" required>
+                                    </div>
+                                </div>
+                                <div class="form-col form-group">
+                                    <label class="form-label">Pincode</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-map-pin form-icon"></i>
+                                        <input type="number" name="pincode" id="pincode" class="form-control icon-input" placeholder="Enter area pincode (6 digits)" required>
+                                        <small id="pincodeError" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Tourist Place</label>
+                                <div class="position-relative">
+                                    <i class="fas fa-mountain form-icon"></i>
+                                    <select name="place" class="form-select place-select icon-input" required>
+                                        <option value="">Select a tourist place</option>
+                                        <option value="Charminar">Charminar</option>
+                                        <option value="Golconda Fort">Golconda Fort</option>
+                                        <option value="Ramoji Film City">Ramoji Film City</option>
+                                        <option value="Bhadrakali Temple">Bhadrakali Temple</option>
+                                        <option value="Kuntala Waterfalls">Kuntala Waterfalls</option>
+                                        <option value="Nagarjuna Sagar Dam">Nagarjuna Sagar Dam</option>
+                                        <option value="Pakhal Lake">Pakhal Lake</option>
+                                        <option value="Medak Cathedral">Medak Cathedral</option>
+                                        <option value="Bogatha Waterfall">Bogatha Waterfall</option>
+                                        <option value="Laknavaram Lake">Laknavaram Lake</option>
+                                        <option value="Yadagirigutta Temple">Yadagirigutta Temple</option>
+                                        <option value="Ananthagiri Hills">Ananthagiri Hills</option>
+                                        <option value="Kadam Dam">Kadam Dam</option>
+                                        <option value="Alampur Jogulamba Temple">Alampur Jogulamba Temple</option>
+                                        <option value="Khammam Fort">Khammam Fort</option>
+                                        <option value="Pocharam Wildlife Sanctuary">Pocharam Wildlife Sanctuary</option>
+                                        <option value="Ethipothala Falls">Ethipothala Falls</option>
+                                        <option value="Warangal Fort">Warangal Fort</option>
+                                        <option value="Sammakka Saralamma Temple">Sammakka Saralamma Temple</option>
+                                        <option value="Thousand Pillar Temple">Thousand Pillar Temple</option>
+                                        <option value="Bhadrachalam Temple">Bhadrachalam Temple</option>
+                                        <option value="Sri Raja Rajeshwara Temple">Sri Raja Rajeshwara Temple</option>
+                                        <option value="Kakatiya Musical Garden">Kakatiya Musical Garden</option>
+                                        <option value="Sri Ramalingeswara Temple">Sri Ramalingeswara Temple</option>
+                                        <option value="Edulabad Waterfalls">Edulabad Waterfalls</option>
+                                        <option value="Ananthagiri Temple">Ananthagiri Temple</option>
+                                        <option value="Sri Lakshmi Narasimha Swamy Temple">Sri Lakshmi Narasimha Swamy Temple</option>
+                                        <option value="Kinnerasani Wildlife Sanctuary">Kinnerasani Wildlife Sanctuary</option>
+                                        <option value="Dhulikatta Buddhist Stupa">Dhulikatta Buddhist Stupa</option>
+                                        <option value="Jagtial Fort">Jagtial Fort</option>
+                                        <option value="Bhongir Fort">Bhongir Fort</option>
+                                        <option value="Nizam Sagar Dam">Nizam Sagar Dam</option>
+                                        <option value="Sri Kaleshwara Mukteswara Swamy Temple">Sri Kaleshwara Mukteswara Swamy Temple</option>
+                                        <option value="Jadcherla Sri Lakshmi Venkateswara Swamy Temple">Jadcherla Sri Lakshmi Venkateswara Swamy Temple</option>
+                                        <option value="Pillalamarri Banyan Tree">Pillalamarri Banyan Tree</option>
+                                        <option value="Koilkonda Fort">Koilkonda Fort</option>
+                                        <option value="Manthani Temples">Manthani Temples</option>
+                                        <option value="Mayuri Haritha Vanam">Mayuri Haritha Vanam</option>
+                                        <option value="Chaya Someswara Temple">Chaya Someswara Temple</option>
+                                        <option value="Jurala Dam">Jurala Dam</option>
+                                        <option value="Rachakonda Fort">Rachakonda Fort</option>
+                                        <option value="Surendrapuri Mythological Museum">Surendrapuri Mythological Museum</option>
+                                        <option value="Narsapur Forest">Narsapur Forest</option>
+                                        <option value="Antharaganga Waterfalls">Antharaganga Waterfalls</option>
+                                        <option value="Kinnerasani Dam">Kinnerasani Dam</option>
+                                        <option value="Medaram Jatara Festival Grounds">Medaram Jatara Festival Grounds</option>
+                                        <option value="Shamirpet Lake">Shamirpet Lake</option>
+                                        <option value="Dichpally Ramalayam">Dichpally Ramalayam</option>
+                                        <option value="Pochera Waterfalls">Pochera Waterfalls</option>
+                                        <option value="Eegalapenta Reservoir">Eegalapenta Reservoir</option>
+                                        <option value="Phanigiri Buddhist Site">Phanigiri Buddhist Site</option>
+                                        <option value="Ananta Padmanabha Swamy Temple">Ananta Padmanabha Swamy Temple</option>
+                                        <option value="Ramappa Temple">Ramappa Temple</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col form-group">
+                                    <label class="form-label">Available From</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-calendar-alt form-icon"></i>
+                                        <input type="date" name="availableFrom" class="form-control icon-input" required>
+                                    </div>
+                                </div>
+                                <div class="form-col form-group">
+                                    <label class="form-label">Available To</label>
+                                    <div class="position-relative">
+                                        <i class="fas fa-calendar-check form-icon"></i>
+                                        <input type="date" name="availableTo" class="form-control icon-input" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <div class="form-section-title">
+                                <i class="fas fa-images"></i> Vehicle Images
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Upload Vehicle Images</label>
+                                <div class="position-relative">
+                                    <i class="fas fa-camera form-icon"></i>
+                                    <input type="file" name="images" class="form-control icon-input" placeholder="Upload image">
+                                </div>
+                                <small class="text-muted">Please provide images  to your vehicle in less than 10mb</small>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-submit w-100" id="submitBtn" disabled>
+                            <i class="fas fa-paper-plane me-2"></i>Submit Vehicle Listing
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Animation script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add subtle animations
+            setTimeout(() => {
+                document.querySelector('.form-card').classList.add('animate__animated', 'animate__pulse');
+            }, 500);
+        });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.place-select').select2({
+                placeholder: "Search and select a tourist place",
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('.place-select').parent()
+            });
+            
+            // Adjust the position of the Select2 dropdown to account for the icon
+            $('.place-select').on('select2:open', function() {
+                setTimeout(function() {
+                    $('.select2-dropdown').css('margin-left', '30px');
+                    $('.select2-search__field').css('padding-left', '10px');
+                }, 0);
+            });
+        });
+    </script>
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 50px;
+            padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-size: 1rem;
+        }
+        
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: normal;
+            padding: 0;
+            color: #333;
+        }
+        
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 50px;
+        }
+        
+        .select2-dropdown {
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .select2-search__field {
+            border-radius: 5px !important;
+            padding: 8px !important;
+        }
+        
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #7952b3;
+        }
+        
+        .select2-results__option {
+            padding: 8px 12px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form validation
+            const vehicleForm = document.getElementById('vehicleForm');
+            const ownerNameInput = document.getElementById('ownerName');
+            const contactInput = document.getElementById('contact');
+            const emailInput = document.getElementById('email');
+            const brandInput = document.getElementById('brand');
+            const modelInput = document.getElementById('model');
+            const regNumberInput = document.getElementById('regNumber');
+            const pincodeInput = document.getElementById('pincode');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Error elements
+            const ownerNameError = document.getElementById('ownerNameError');
+            const contactError = document.getElementById('contactError');
+            const emailError = document.getElementById('emailError');
+            const brandError = document.getElementById('brandError');
+            const modelError = document.getElementById('modelError');
+            const regNumberError = document.getElementById('regNumberError');
+            const pincodeError = document.getElementById('pincodeError');
+            
+            // Validation flags
+            let isNameValid = false;
+            let isContactValid = false;
+            let isEmailValid = true; // Email is optional
+            let isBrandValid = false;
+            let isModelValid = false;
+            let isRegNumberValid = false;
+            let isPincodeValid = false;
+            
+            // Name validation - 5-15 characters, only letters
+            ownerNameInput.addEventListener('input', validateName);
+            
+            function validateName() {
+                const name = ownerNameInput.value.trim();
+                const nameRegex = /^[a-zA-Z ]{5,15}$/;
+                
+                if (!name) {
+                    ownerNameError.textContent = 'Name is required';
+                    isNameValid = false;
+                } else if (!nameRegex.test(name)) {
+                    ownerNameError.textContent = 'Name must be 5-15 characters and contain only letters';
+                    isNameValid = false;
+                } else {
+                    ownerNameError.textContent = '';
+                    isNameValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Contact validation - Indian phone numbers
+            contactInput.addEventListener('input', validateContact);
+            
+            function validateContact() {
+                const contact = contactInput.value.trim();
+                const indianPhoneRegex = /^[6-9]\d{9}$/;
+                
+                if (!contact) {
+                    contactError.textContent = 'Contact number is required';
+                    isContactValid = false;
+                } else if (!indianPhoneRegex.test(contact)) {
+                    contactError.textContent = 'Please enter a valid Indian phone number (10 digits starting with 6-9)';
+                    isContactValid = false;
+                } else {
+                    contactError.textContent = '';
+                    isContactValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Email validation - only allow gmail accounts, but optional
+            emailInput.addEventListener('input', validateEmail);
+            
+            function validateEmail() {
+                const email = emailInput.value.trim();
+                
+                if (email) {
+                    const gmailRegex = /^[\w.+-]+@gmail\.com$/;
+                    
+                    if (!gmailRegex.test(email)) {
+                        emailError.textContent = 'Only Gmail accounts are allowed';
+                        isEmailValid = false;
+                    } else {
+                        emailError.textContent = '';
+                        isEmailValid = true;
+                    }
+                } else {
+                    // Email is optional
+                    emailError.textContent = '';
+                    isEmailValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Brand validation
+            brandInput.addEventListener('input', validateBrand);
+            
+            function validateBrand() {
+                const brand = brandInput.value.trim();
+                
+                if (!brand) {
+                    brandError.textContent = 'Brand is required';
+                    isBrandValid = false;
+                } else if (brand.length < 2 || brand.length > 15) {
+                    brandError.textContent = 'Brand must be between 2-15 characters';
+                    isBrandValid = false;
+                } else {
+                    brandError.textContent = '';
+                    isBrandValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Model validation
+            modelInput.addEventListener('input', validateModel);
+            
+            function validateModel() {
+                const model = modelInput.value.trim();
+                
+                if (!model) {
+                    modelError.textContent = 'Model is required';
+                    isModelValid = false;
+                } else if (model.length < 1 || model.length > 15) {
+                    modelError.textContent = 'Model must be between 1-15 characters';
+                    isModelValid = false;
+                } else {
+                    modelError.textContent = '';
+                    isModelValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Registration Number validation
+            regNumberInput.addEventListener('input', validateRegNumber);
+            
+            function validateRegNumber() {
+                const regNumber = regNumberInput.value.trim();
+                const regNumberRegex = /^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$/;
+                
+                if (!regNumber) {
+                    regNumberError.textContent = 'Registration number is required';
+                    isRegNumberValid = false;
+                } else if (!regNumberRegex.test(regNumber)) {
+                    regNumberError.textContent = 'Please enter a valid registration number format (e.g., TS02AB1234)';
+                    isRegNumberValid = false;
+                } else {
+                    regNumberError.textContent = '';
+                    isRegNumberValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Pincode validation - 6 digits only
+            pincodeInput.addEventListener('input', validatePincode);
+            
+            function validatePincode() {
+                const pincode = pincodeInput.value.trim();
+                const pincodeRegex = /^\d{6}$/;
+                
+                if (!pincode) {
+                    pincodeError.textContent = 'Pincode is required';
+                    isPincodeValid = false;
+                } else if (!pincodeRegex.test(pincode)) {
+                    pincodeError.textContent = 'Please enter a valid 6-digit pincode';
+                    isPincodeValid = false;
+                } else {
+                    pincodeError.textContent = '';
+                    isPincodeValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Toggle submit button based on validation
+            function toggleSubmitButton() {
+                submitBtn.disabled = !(isNameValid && isContactValid && isEmailValid && 
+                                     isBrandValid && isModelValid && isRegNumberValid && 
+                                     isPincodeValid);
+            }
+            
+            // Validate on form submission
+            vehicleForm.addEventListener('submit', function(e) {
+                validateName();
+                validateContact();
+                validateEmail();
+                validateBrand();
+                validateModel();
+                validateRegNumber();
+                validatePincode();
+                
+                if (!(isNameValid && isContactValid && isEmailValid && 
+                     isBrandValid && isModelValid && isRegNumberValid && 
+                     isPincodeValid)) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Initialize validation on page load
+            validateName();
+            validateContact();
+            validateBrand();
+            validateModel();
+            validateRegNumber();
+            validatePincode();
+        });
+    </script>
+</body>
+</html>

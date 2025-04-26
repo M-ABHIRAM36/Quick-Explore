@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reassign Driver - Quick Explore</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --light-gray: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --form-bg: #ffffff;
+            --accent-color: #7952b3;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            font-family: 'Poppins', sans-serif;
+            padding-top: 70px;
+            background-image: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+        }
+        
+        .navbar {
+            background: var(--secondary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        
+        .navbar-brand i {
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: white !important;
+        }
+        
+        .nav-link.active {
+            color: white !important;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"><path fill="none" stroke="white" stroke-width="1" d="M20,20 L80,80 M0,40 L40,0 M60,0 L0,60 M80,20 L20,80" stroke-opacity="0.1"/></svg>');
+            background-size: 40px;
+            opacity: 0.3;
+        }
+        
+        .form-card {
+            background: var(--form-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: none;
+            position: relative;
+        }
+        
+        .form-header {
+            background: linear-gradient(to right, var(--accent-color), #4a4a8a);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .form-header h3 {
+            margin: 0;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .form-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+            background-size: 15px 15px;
+        }
+        
+        .form-body {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(121, 82, 179, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label i {
+            margin-right: 10px;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+        
+        .select2-container--default .select2-selection--single {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+        }
+        
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 50px;
+        }
+        
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-submit {
+            background: linear-gradient(to right, var(--accent-color), #4a4a8a);
+            border: none;
+            border-radius: 50px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(74, 74, 138, 0.3);
+        }
+        
+        .btn-submit::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 74, 138, 0.5);
+        }
+        
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+        
+        .form-icon {
+            font-size: 8rem;
+            color: var(--accent-color);
+            opacity: 0.05;
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            transform: rotate(-15deg);
+        }
+        
+        .navigation-links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .navigation-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        .navigation-links a:hover {
+            color: #4a4a8a;
+            transform: translateY(-2px);
+        }
+        
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 2rem;
+        }
+        
+        .info-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card h4 i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .comp-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .comp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .comp-card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .comp-card-header i {
+            margin-right: 10px;
+            background: rgba(255,255,255,0.2);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .comp-card-body {
+            padding: 1.5rem;
+        }
+        
+        .comp-card-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        
+        .comp-card-feature i {
+            color: var(--success-color);
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .step-card {
+            display: flex;
+            align-items: flex-start;
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .step-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .step-text {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin-top: 1rem;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: white;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .comparison-table td:first-child {
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tag-primary {
+            background: rgba(74, 144, 226, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .tag-accent {
+            background: rgba(121, 82, 179, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .tag-success {
+            background: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/admin">
+                <i class="fas fa-map-marked-alt me-2"></i> Quick Explore
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/driver/add"><i class="fas fa-user-plus me-1"></i> Add Driver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/driver/assign-vehicle"><i class="fas fa-link me-1"></i> Assign Driver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-sync-alt me-1"></i> Reassign Driver</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header animate__animated animate__fadeIn">
+            <h1 class="display-5 mb-2"><i class="fas fa-sync-alt me-3"></i>Reassign Driver to Vehicle</h1>
+            <p class="lead">Replace an existing driver assignment with a new driver</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="form-card animate__animated animate__fadeInUp">
+                    <div class="form-header">
+                        <h3><i class="fas fa-exchange-alt me-2"></i>Reassignment Information</h3>
+                    </div>
+                    <div class="form-body position-relative">
+                        <i class="fas fa-sync form-icon"></i>
+                        
+                        <form action="/driver/assign-vehicleNewDriver" method="POST">
+                            <div class="mb-4">
+                                <label for="driverId" class="form-label">
+                                    <i class="fas fa-user-tie"></i> Select New Driver
+                                </label>
+                                <select class="form-select select2" name="driverId" id="driverId" required>
+                                    <option value="" selected disabled>-- Choose a new driver --</option>
+                <% drivers.forEach(driver => { %>
+                                        <option value="<%= driver._id %>">
+                                            <%= driver.username %> - <%= driver.phone %> (<%= driver.place %>)
+                                        </option>
+                <% }) %>
+            </select>
+                                <div class="form-text">Select the new driver who will take over the vehicle</div>
+        </div>
+
+                            <div class="mb-4">
+                                <label for="vehicleId" class="form-label">
+                                    <i class="fas fa-car"></i> Select Assigned Vehicle
+                                </label>
+                                <select class="form-select select2" name="vehicleId" id="vehicleId" required>
+                                    <option value="" selected disabled>-- Choose an assigned vehicle --</option>
+                <% vehicles.forEach(vehicle => { %>
+                    <option value="<%= vehicle._id %>">
+                        <%= vehicle.brand %> <%= vehicle.model %> - <%= vehicle.registrationNumber %> (<%= vehicle.place %>)
+                    </option>
+                <% }) %>
+            </select>
+                                <div class="form-text">Select the vehicle that already has a driver assigned to it</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-submit w-100">
+                                <i class="fas fa-sync-alt me-2"></i>Reassign Vehicle to New Driver
+                            </button>
+                        </form>
+                        
+                        <div class="navigation-links mt-4">
+                            <a href="/driver/add"><i class="fas fa-user-plus me-1"></i> Add New Driver</a>
+                            <span class="text-muted">|</span>
+                            <a href="/driver/assign-vehicle"><i class="fas fa-link me-1"></i> Simple Assignment</a>
+                            <span class="text-muted">|</span>
+                            <a href="/admin"><i class="fas fa-arrow-left me-1"></i> Back to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                    <h4><i class="fas fa-info-circle"></i> How Reassignment Works</h4>
+                    
+                    <div class="step-card" style="animation-delay: 0.3s">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Select New Driver</div>
+                            <div class="step-text">Choose the driver who will take over the vehicle. This driver must be available in the system.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card" style="animation-delay: 0.4s">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Select Assigned Vehicle</div>
+                            <div class="step-text">Choose a vehicle that already has a driver assigned to it. This vehicle will be reassigned.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card" style="animation-delay: 0.5s">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Submit Reassignment</div>
+                            <div class="step-text">The existing driver will be unassigned, and the new driver will take over the vehicle.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card" style="animation-delay: 0.6s">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Update Records</div>
+                            <div class="step-text">The system automatically updates all records and makes the new assignment active.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="comp-card animate__animated animate__fadeInRight">
+                    <div class="comp-card-header">
+                        <i class="fas fa-exchange-alt"></i> Reassignment Benefits
+                    </div>
+                    <div class="comp-card-body">
+                        <div class="comp-card-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Quickly replace drivers without disrupting service</div>
+                        </div>
+                        <div class="comp-card-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Handle driver unavailability or scheduling conflicts</div>
+                        </div>
+                        <div class="comp-card-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Maintain booking continuity with vehicle reassignments</div>
+                        </div>
+                        <div class="comp-card-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div>Simplify driver management for your fleet</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="comp-card animate__animated animate__fadeInRight" style="animation-delay: 0.2s">
+                    <div class="comp-card-header">
+                        <i class="fas fa-tags"></i> When To Use Reassignment
+                    </div>
+                    <div class="comp-card-body">
+                        <span class="tag tag-primary">Driver Unavailable</span>
+                        <span class="tag tag-accent">Driver Change</span>
+                        <span class="tag tag-success">Performance Issues</span>
+                        <span class="tag tag-primary">Schedule Conflicts</span>
+                        <span class="tag tag-accent">Customer Requests</span>
+                        <span class="tag tag-success">Route Optimization</span>
+                        
+                        <p class="mt-3 mb-0 text-muted">Use this form when you need to replace a driver for an already assigned vehicle, rather than making a new assignment from scratch.</p>
+                    </div>
+                </div>
+                
+                <div class="comp-card animate__animated animate__fadeInRight" style="animation-delay: 0.3s">
+                    <div class="comp-card-header">
+                        <i class="fas fa-question-circle"></i> Assignment Types
+                    </div>
+                    <div class="comp-card-body p-0">
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Type</th>
+                                <th>Purpose</th>
+                            </tr>
+                            <tr>
+                                <td>Standard Assignment</td>
+                                <td>Assign a driver to an unassigned vehicle</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reassignment</strong></td>
+                                <td>Replace an existing driver with a new one</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2
+            $('.select2').select2({
+                placeholder: "Make a selection",
+                allowClear: true
+            });
+            
+            // Animation for step cards
+            setTimeout(function() {
+                document.querySelectorAll('.step-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                    }, index * 150);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rental Cancellation Summary - Quick Explore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    :root {
+      --primary-color: #4e54c8;
+      --secondary-color: #8f94fb;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      --danger-gradient: linear-gradient(135deg, #ff6b6b, #ee5253);
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e5ec' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      padding: 2rem 0;
+      min-height: 100vh;
+    }
+    
+    .navbar {
+      background: var(--gradient-bg);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 0.7rem 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: white;
+    }
+    
+    .navbar-brand i {
+      margin-right: 8px;
+    }
+    
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: white;
+      color: var(--primary-color);
+      border: none;
+      box-shadow: var(--card-shadow);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .btn-back:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      background: #f0f0f0;
+    }
+    
+    .summary-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 2rem;
+      background-color: white;
+    }
+    
+    .card-header {
+      background: var(--danger-gradient);
+      color: white;
+      padding: 1.5rem;
+      border-bottom: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+    
+    .card-header h4 {
+      margin: 0;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card-body {
+      padding: 2rem;
+    }
+    
+    .info-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary-color);
+      font-weight: 600;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .section-title i {
+      font-size: 1.2rem;
+      background: var(--gradient-bg);
+      color: white;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .info-item {
+      margin-bottom: 0.5rem;
+      display: flex;
+    }
+    
+    .info-label {
+      font-weight: 600;
+      min-width: 150px;
+      color: var(--text-color);
+    }
+    
+    .info-value {
+      flex: 1;
+    }
+    
+    .cancellation-amount {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-color);
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    
+    .status-success {
+      background-color: rgba(46, 213, 115, 0.15);
+      color: #2ed573;
+    }
+    
+    .status-muted {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark animate__animated animate__fadeIn">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <i class="fas fa-compass"></i> Quick Explore
+      </a>
+    </div>
+  </nav>
+
+  <div class="container mt-5 pt-4">
+    <!-- Back Button -->
+    <div class="mb-4 animate__animated animate__fadeInLeft">
+      <a href="/places2" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+    
+    <div class="summary-card animate__animated animate__fadeIn">
+      <div class="card-header">
+        <h4 class="animate__animated animate__fadeInRight">
+          <i class="fas fa-home animate__animated animate__pulse animate__infinite animate__slow"></i> Rental Cancelled Successfully
+        </h4>
+      </div>
+      <div class="card-body">
+        <!-- User Section -->
+        <div class="info-section animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+          <h5 class="section-title">
+            <i class="fas fa-user"></i> User Info
+          </h5>
+          <div class="info-item">
+            <div class="info-label">Name:</div>
+            <div class="info-value"><%= user.username %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Email:</div>
+            <div class="info-value"><%= user.email %></div>
+          </div>
+        </div>
+
+        <!-- Rental Info -->
+        <div class="info-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+          <h5 class="section-title">
+            <i class="fas fa-home"></i> Rental Info
+          </h5>
+          <div class="info-item">
+            <div class="info-label">Type:</div>
+            <div class="info-value"><%= rental.propertyType %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Location:</div>
+            <div class="info-value"><%= rental.location %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Price per Day:</div>
+            <div class="info-value">₹<%= rental.price %></div>
+          </div>
+        </div>
+
+        <!-- Booking Info -->
+        <div class="info-section animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+          <h5 class="section-title">
+            <i class="fas fa-map-marker-alt"></i> Stay Details
+          </h5>
+          <div class="info-item">
+            <div class="info-label">Destination:</div>
+            <div class="info-value"><%= booking.place %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Check-In:</div>
+            <div class="info-value"><%= new Date(booking.checkInDate).toLocaleDateString() %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Check-Out:</div>
+            <div class="info-value"><%= new Date(booking.checkOutDate).toLocaleDateString() %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Cancelled On:</div>
+            <div class="info-value"><%= new Date(cancelledAt).toLocaleString() %></div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-section animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+          <h5 class="section-title">
+            <i class="fas fa-money-bill-wave"></i> Cancellation Summary
+          </h5>
+          <div class="info-item">
+            <div class="info-label">Total Amount:</div>
+            <div class="info-value">₹<%= booking.totalAmount %></div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Cancellation Fee:</div>
+            <div class="info-value cancellation-amount">₹<%= cancellationFee %></div>
+          </div>
+          <div class="mt-3">
+            <% if (cancellationFee > 0) { %>
+              <div class="status-badge status-muted">
+                <i class="fas fa-info-circle me-2"></i> A cancellation transaction has been recorded
+              </div>
+            <% } else { %>
+              <div class="status-badge status-success">
+                <i class="fas fa-check-circle me-2"></i> No cancellation fee was charged
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add subtle hover effect to the summary card
+      const summaryCard = document.querySelector('.summary-card');
+      
+      summaryCard.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.15)';
+        this.style.transition = 'all 0.3s ease';
+      });
+      
+      summaryCard.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.1)';
+        this.style.transition = 'all 0.3s ease';
+      });
+    });
+  </script>
+</body>
+</html>

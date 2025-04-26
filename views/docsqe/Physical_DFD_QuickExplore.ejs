@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickExplore - Physical Data Flow Diagrams</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --box-bg: #ffffff;
+            --border-color: #dee2e6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .dfd-card {
+            background-color: var(--box-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .dfd-diagram {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            white-space: pre;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        ul {
+            padding-left: 2rem;
+            margin: 1rem 0;
+        }
+        
+        .entity-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .entity-item {
+            background-color: rgba(74, 144, 226, 0.1);
+            border-left: 3px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        .data-store {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .data-store h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .data-store ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .data-store li {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .data-store li:last-child {
+            border-bottom: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .dfd-diagram {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Interactive elements */
+        .collapsible {
+            background-color: rgba(74, 144, 226, 0.1);
+            color: var(--secondary-color);
+            cursor: pointer;
+            padding: 1rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .active, .collapsible:hover {
+            background-color: rgba(74, 144, 226, 0.2);
+        }
+        
+        .collapsible:after {
+            content: '\002B';
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .active:after {
+            content: "\2212";
+        }
+        
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: white;
+            border-radius: 0 0 6px 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Physical Data Flow Diagrams for QuickExplore</h1>
+            <p>Based on current project models and application structure</p>
+        </header>
+        
+        <div class="dfd-card">
+            <h2>Level 0 (Context Diagram)</h2>
+            <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|    External    |-------->|    QuickExplore    |-------->|    External    |
+|    Entities    |         |      System        |         |    Systems     |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+            </div>
+            
+            <h3>External Entities</h3>
+            <div class="entity-list">
+                <div class="entity-item">Users (Tourists)</div>
+                <div class="entity-item">Vehicle Owners</div>
+                <div class="entity-item">Accommodation Owners</div>
+                <div class="entity-item">Drivers</div>
+                <div class="entity-item">Administrator</div>
+            </div>
+            
+            <h3>External Systems</h3>
+            <div class="entity-list">
+                <div class="entity-item">MongoDB Database</div>
+                <div class="entity-item">Cloudinary (Image Storage)</div>
+                <div class="entity-item">Session Store</div>
+            </div>
+        </div>
+        
+        <div class="dfd-card">
+            <h2>Level 1 (Main Processes)</h2>
+            <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|    User        |-------->|   Authentication   |-------->|    Session     |
+|  Management    |         |     & Access       |         |     Store      |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |                          ^  |
+       |  v                        |  v                          |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|  Tourist Place |-------->|     Vehicle        |-------->|    Database    |
+|   Management   |         |    Management      |         |    (MongoDB)   |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |                          ^  |
+       |  v                        |  v                          |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+| Accommodation  |-------->|     Booking        |-------->|    Image       |
+|   Management   |         |    Management      |         |    Storage     |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |                          ^  |
+       |  v                        |  v                          |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|  Admin Portal  |-------->|    Transaction     |-------->|  Notification  |
+|                |         |    Management      |         |     System     |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+            </div>
+        </div>
+        
+        <div class="dfd-card">
+            <h2>Level 2 (Detailed Process Breakdown)</h2>
+            
+            <button class="collapsible">2.1 Authentication & User Management Process</button>
+            <div class="content">
+                <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     User       |-------->|  User Registration |-------->|    MongoDB     |
+|  (Browser)     |         |                    |         | (User Collection)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|    Encryption  |-------->|     User Login     |-------->|  MongoDB Store |
+|    (bcrypt)    |         |                    |         |   (sessions)   |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|    Session     |-------->| Authorization Check|-------->|    Profile     |
+|  Management    |         |  (requireLogin)    |         |   Management   |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+                </div>
+            </div>
+            
+            <button class="collapsible">2.2 Vehicle Management Process</button>
+            <div class="content">
+                <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|   Vehicle      |-------->|  Vehicle Request   |-------->|    MongoDB     |
+|    Owner       |         |   Registration     |         |(vehicleRequests)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|   Admin        |-------->|  Request Approval  |-------->|   Cloudinary   |
+|                |         |    & Validation    |         |  (Image Store) |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     Driver     |-------->|  Driver Assignment |-------->|    MongoDB     |
+|   Management   |         |                    |         | (Driver Collection)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     Users      |-------->|   Vehicle Search   |-------->|    Vehicle     |
+|   (Tourists)   |         |    & Booking       |         |   Availability |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+                </div>
+            </div>
+            
+            <button class="collapsible">2.3 Accommodation Management Process</button>
+            <div class="content">
+                <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+| Accommodation  |-------->| Rental Registration|-------->|    MongoDB     |
+|     Owner      |         |                    |         |(rentalRequests)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|   Admin        |-------->|  Request Approval  |-------->|   Cloudinary   |
+|                |         |    & Validation    |         |  (Image Store) |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|    Users       |-------->| Accommodation Search|------->| Rental Property|
+|  (Tourists)    |         |    & Filter        |         |  Availability  |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|    Tourist     |-------->|   Proximity &      |-------->|    MongoDB     |
+|    Places      |         |  Place Matching    |         |  (ListingPs)   |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+                </div>
+            </div>
+            
+            <button class="collapsible">2.4 Booking Management Process</button>
+            <div class="content">
+                <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     User       |-------->|  Vehicle Booking   |-------->|    MongoDB     |
+|   (Tourist)    |         |                    |         |   (Bookings)   |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|   Booking      |-------->| Accommodation      |-------->|    MongoDB     |
+|   Database     |         |     Booking        |         |(RentalBookings)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|  Availability  |-------->|   Cancellation     |-------->|    MongoDB     |
+|    Calendar    |         |   & Refund Process |         | (Transactions) |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+| User Charges   |-------->|  Payment Tracking  |-------->| User Charges   |
+|    History     |         |                    |         |    History     |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+                </div>
+            </div>
+            
+            <button class="collapsible">2.5 Tourist Place Management Process</button>
+            <div class="content">
+                <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     Admin      |-------->|   Place Listing    |-------->|    MongoDB     |
+|                |         |     Management     |         |  (ListingPs)   |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     User       |-------->|   Place Search     |-------->|    Filtered    |
+|   (Tourist)    |         |    & Discovery     |         |     Results    |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|  Related       |-------->|  Recommendations   |-------->|    MongoDB     |
+|  Services      |         |                    |         | (Multiple Collections)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|   Cloudinary   |-------->|   Image Storage    |-------->| Place Details  |
+|                |         |    & Retrieval     |         |     View       |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+                </div>
+            </div>
+            
+            <button class="collapsible">2.6 Transaction Management Process</button>
+            <div class="content">
+                <div class="dfd-diagram">
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|     User       |-------->|   Payment Process  |-------->|    MongoDB     |
+|                |         |                    |         | (Transactions) |
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+|  Cancellation  |-------->|   Refund Process   |-------->|    MongoDB     |
+|    Charges     |         |                    |         |(CancellationCharges)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+       ^  |                        ^  |
+       |  v                        |  v
++----------------+         +--------------------+         +----------------+
+|                |         |                    |         |                |
+| User Charges   |-------->| Transaction History|-------->|    MongoDB     |
+|    History     |         |     Management     |         |(UserChargesHistory)|
+|                |<--------|                    |<--------|                |
++----------------+         +--------------------+         +----------------+
+                </div>
+            </div>
+        </div>
+        
+        <div class="dfd-card">
+            <h2>Physical Data Store Specifications</h2>
+            
+            <div class="data-store">
+                <h4>User Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: Users</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Authentication: bcrypt for password hashing</li>
+                    <li>Fields: username, email, password, phone, createdAt</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Place Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: ListingPs</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Media Storage: URLs to cloudinary images</li>
+                    <li>Fields: title, images, location, pincode, description, type, bestTimeToVisit, entryFee, contact, website, nearbyAttractions, createdAt</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Vehicle Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: vehicleRequests</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Foreign Keys: currentDriver (reference to Driver)</li>
+                    <li>Fields: ownerName, contact, email, vehicleType, brand, model, registrationNumber, location, pincode, images, rentalPricePerDay, availableFrom, availableTo, place, adminStatus, bookingStatus, createdAt</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Rental Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: rentalRequests</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Fields: ownerName, contact, email, propertyType, location, place, distFromPlace, pincode, price, images, description, adminStatus, bookingStatus, createdAt, password</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Driver Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: drivers</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Foreign Keys: currentVehicle (reference to vehicleRequest)</li>
+                    <li>Fields: username, phone, email, place, password</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Booking Stores</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collections: 
+                        <ul style="padding-left: 20px; margin: 5px 0;">
+                            <li>Bookings (for vehicles)</li>
+                            <li>RentalBookings (for accommodations)</li>
+                        </ul>
+                    </li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Foreign Keys:
+                        <ul style="padding-left: 20px; margin: 5px 0;">
+                            <li>userId (reference to User)</li>
+                            <li>vehicleId (reference to VehicleRequest)</li>
+                            <li>driverId (reference to Driver)</li>
+                            <li>rentalId (reference to RentalRequest)</li>
+                        </ul>
+                    </li>
+                    <li>Fields: place, pickupDate, dropoffDate, totalAmount, paymentStatus, vehicleStatus, createdAt</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Transaction Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: Transactions</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Foreign Keys:
+                        <ul style="padding-left: 20px; margin: 5px 0;">
+                            <li>userId (reference to User)</li>
+                            <li>vehicleId (reference to VehicleRequest)</li>
+                        </ul>
+                    </li>
+                    <li>Fields: amount, type, createdAt</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Cancellation Charges Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: CancellationCharges</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Fields: percentage, appliedDate</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>User Charges History Store</h4>
+                <ul>
+                    <li>Database: MongoDB</li>
+                    <li>Collection: UserChargesHistory and UserRentalChargesHistory</li>
+                    <li>Primary Key: _id (ObjectId)</li>
+                    <li>Foreign Keys: userId, bookingId, vehicleId/rentalId</li>
+                    <li>Fields: amount, type, status, timestamp</li>
+                </ul>
+            </div>
+            
+            <div class="data-store">
+                <h4>Session Store</h4>
+                <ul>
+                    <li>Database: MongoDB (via connect-mongo)</li>
+                    <li>Collection: sessions</li>
+                    <li>Fields: session data, expiry</li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer>
+            <p>QuickExplore - Physical Data Flow Diagrams</p>
+        </footer>
+    </div>
+
+    <script>
+        // JavaScript for collapsible sections
+        document.addEventListener('DOMContentLoaded', function() {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } 
+                });
+            }
+            
+            // Open the first section by default
+            if(coll.length > 0) {
+                coll[0].click();
+            }
+        });
+    </script>
+</body>
+</html> 

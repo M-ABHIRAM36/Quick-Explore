@@ -1,0 +1,351 @@
+<%- include("../includes/navbar.ejs")%>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<style>
+  :root {
+    --primary-color: #4e54c8;
+    --secondary-color: #8f94fb;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --light-bg: #f8f9fa;
+    --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    --gradient-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e5ec' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    color: var(--text-color);
+  }
+  
+  .page-header {
+    background: var(--gradient-bg);
+    padding: 2.5rem 0;
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+  
+  .charges-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1.5rem;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .charges-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-header {
+    background: var(--gradient-bg);
+    color: white;
+    padding: 1rem;
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .info-section {
+    margin-bottom: 1.2rem;
+  }
+  
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-color);
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .section-title i {
+    font-size: 1.2rem;
+    background: var(--gradient-bg);
+    color: white;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .info-item {
+    margin-bottom: 0.5rem;
+    display: flex;
+  }
+  
+  .info-label {
+    font-weight: 600;
+    min-width: 150px;
+    color: var(--text-color);
+  }
+  
+  .info-value {
+    flex: 1;
+  }
+  
+  .btn-back {
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    box-shadow: var(--card-shadow);
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    background: #f0f0f0;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .empty-state i {
+    font-size: 4rem;
+    color: #d1d8e0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cancellation-amount {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .contact-box {
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  .contact-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  .contact-content {
+    padding: 15px;
+  }
+  
+  .contact-number {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 50px;
+    color: var(--accent-color);
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .contact-number:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+  }
+  
+  .contact-note {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+  
+  .pulse {
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.025);
+      opacity: 1;
+    }
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="page-header animate__animated animate__fadeIn">
+    <h1 class="display-5 mb-2"><i class="fas fa-money-bill-wave me-3"></i>My Rental Cancellation Charges</h1>
+    <p class="lead">View all your rental cancellation charges and fee details</p>
+  </div>
+  
+  <div class="container mt-3">
+    <a href="/places2" class="btn btn-back animate__animated animate__fadeInLeft">
+      <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+  </div>
+
+  <% if (charges.length === 0) { %>
+    <div class="empty-state animate__animated animate__fadeIn">
+      <i class="fas fa-file-invoice-dollar animate__animated animate__pulse animate__infinite animate__slow"></i>
+      <h4 class="mt-4 text-muted">No rental cancellations found</h4>
+      <p class="text-muted">When you cancel a rental booking, the details will appear here</p>
+    </div>
+  <% } else { %>
+    <div class="row">
+      <% charges.forEach((charge, index) => { %>
+        <div class="col-lg-6 animate__animated animate__fadeInUp" style="--animate-delay: <%= index * 0.1 %>s">
+          <div class="charges-card">
+            <div class="card-header">
+              <h5 class="mb-0"><i class="fas fa-home me-2"></i>Rental #<%= index + 1 %></h5>
+            </div>
+            <div class="card-body">
+              <div class="info-section">
+                <h6 class="section-title">
+                  <i class="fas fa-home"></i> Rental Info
+                </h6>
+                <div class="info-item">
+                  <div class="info-label">Type:</div>
+                  <div class="info-value"><%= charge.rental.propertyType %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Location:</div>
+                  <div class="info-value"><%= charge.rental.location %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Price per Day:</div>
+                  <div class="info-value">₹<%= charge.rental.price %></div>
+                </div>
+              </div>
+
+              <div class="info-section">
+                <h6 class="section-title">
+                  <i class="fas fa-map-marker-alt"></i> Trip Details
+                </h6>
+                <div class="info-item">
+                  <div class="info-label">Destination:</div>
+                  <div class="info-value"><%= charge.destination %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Check-In:</div>
+                  <div class="info-value"><%= new Date(charge.fromDate).toLocaleDateString() %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Check-Out:</div>
+                  <div class="info-value"><%= new Date(charge.toDate).toLocaleDateString() %></div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Cancelled On:</div>
+                  <div class="info-value"><%= new Date(charge.cancelledAt).toLocaleString() %></div>
+                </div>
+              </div>
+
+              <div class="info-section">
+                <h6 class="section-title">
+                  <i class="fas fa-money-bill-wave"></i> Charges
+                </h6>
+                <div class="info-item">
+                  <div class="info-label">Cancellation Fee:</div>
+                  <div class="info-value cancellation-amount">₹<%= charge.cancellationFee %></div>
+                </div>
+                <p class="text-muted mt-2">This charge has been recorded.</p>
+                
+                <% if(charge.cancellationFee > 0){ %>
+                  <div class="contact-box mt-3 animate__animated animate__fadeIn">
+                    <div class="contact-header">
+                      <i class="fas fa-phone-alt me-2"></i> Payment Support
+                    </div>
+                    <div class="contact-content">
+                      <p class="mb-0">To process your payment, please contact our support team:</p>
+                      <a href="tel:8888899999" class="contact-number">
+                        <i class="fas fa-phone-alt me-2 pulse"></i>88888 99999
+                      </a>
+                      <p class="contact-note mt-2">Our team is available from 9 AM to 9 PM every day</p>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add pulse animation to cards on hover
+    const cards = document.querySelectorAll('.charges-card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.classList.add('animate__animated', 'animate__pulse');
+      });
+      card.addEventListener('mouseleave', function() {
+        this.classList.remove('animate__animated', 'animate__pulse');
+      });
+    });
+  });
+</script>
+
+
