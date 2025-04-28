@@ -270,11 +270,18 @@
                             
                             <div class="mt-3">
                                 <% if (booking.status === "Booked") { %>
-                                    <form action="/owner/complete-booking/<%= booking._id %>" method="POST">
-                                        <button type="submit" class="btn btn-complete">
-                                            <i class="fas fa-check-circle me-2"></i>Mark as Completed
-                                        </button>
-                                    </form>
+                                    <div class="d-flex gap-2">
+                                        <form action="/owner/complete-booking/<%= booking._id %>" method="POST">
+                                            <button type="submit" class="btn btn-complete">
+                                                <i class="fas fa-check-circle me-2"></i>Mark as Completed
+                                            </button>
+                                        </form>
+                                        <form action="/owner/cancel-booking/<%= booking._id %>" method="POST">
+                                            <button type="submit" class="btn btn-cancel" onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                                <i class="fas fa-times-circle me-2"></i>Cancel Booking
+                                            </button>
+                                        </form>
+                                    </div>
                                 <% } else { %>
                                     <div class="status-badge">
                                         <i class="fas fa-check-circle me-1"></i>Status: <%= booking.rentalStatus %>
