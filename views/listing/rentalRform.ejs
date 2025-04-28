@@ -309,7 +309,7 @@
                                     <label for="ownerName" class="form-label">Owner Name</label>
                                     <div class="position-relative">
                                         <i class="fas fa-user form-icon"></i>
-                                        <input type="text" class="form-control icon-input" id="ownerName" name="ownerName" placeholder="Enter your full name (5-15 characters, letters only)" required>
+                                        <input type="text" class="form-control icon-input" id="ownerName" name="ownerName" placeholder="Enter your full name (3-15 characters, letters only)" required>
                                         <small id="ownerNameError" class="form-text text-danger"></small>
                                     </div>
                                 </div>
@@ -562,6 +562,10 @@
             const contactInput = document.getElementById('contact');
             const emailInput = document.getElementById('email');
             const pincodeInput = document.getElementById('pincode');
+            const priceInput = document.getElementById('price');
+            const distFromPlaceInput = document.getElementById('distFromPlace');
+            const locationInput = document.getElementById('location');
+            const imagesInput = document.getElementById('images');
             const submitBtn = document.getElementById('submitBtn');
             
             // Error elements
@@ -570,18 +574,39 @@
             const emailError = document.getElementById('emailError');
             const pincodeError = document.getElementById('pincodeError');
             
+            // Create new error elements
+            const priceError = document.createElement('small');
+            priceError.className = 'form-text text-danger';
+            priceInput.parentNode.appendChild(priceError);
+            
+            const distanceError = document.createElement('small');
+            distanceError.className = 'form-text text-danger';
+            distFromPlaceInput.parentNode.appendChild(distanceError);
+            
+            const locationError = document.createElement('small');
+            locationError.className = 'form-text text-danger';
+            locationInput.parentNode.appendChild(locationError);
+            
+            const imagesError = document.createElement('small');
+            imagesError.className = 'form-text text-danger';
+            imagesInput.parentNode.appendChild(imagesError);
+            
             // Validation flags
             let isNameValid = false;
             let isContactValid = false;
             let isEmailValid = true; // Email is optional
             let isPincodeValid = false;
+            let isPriceValid = false;
+            let isDistanceValid = false;
+            let isLocationValid = false;
+            let isImagesValid = false;
             
             // Name validation - 5-15 characters, only letters
             ownerNameInput.addEventListener('input', validateName);
             
             function validateName() {
                 const name = ownerNameInput.value.trim();
-                const nameRegex = /^[a-zA-Z ]{5,15}$/;
+                const nameRegex = /^[a-zA-Z ]{3,15}$/;
                 
                 if (!name) {
                     ownerNameError.textContent = 'Name is required';
@@ -643,18 +668,112 @@
                 toggleSubmitButton();
             }
             
-            // Pincode validation - 6 digits only
+            // Price validation - between 1000 and 250000
+            priceInput.addEventListener('input', validatePrice);
+            
+            function validatePrice() {
+                const price = priceInput.value.trim();
+                const minPrice = 1000;
+                const maxPrice = 250000;
+                
+                if (!price) {
+                    priceError.textContent = 'Price is required';
+                    isPriceValid = false;
+                } else if (price < minPrice) {
+                    priceError.textContent = `Price must be at least ₹${minPrice}`;
+                    isPriceValid = false;
+                } else if (price > maxPrice) {
+                    priceError.textContent = `Price cannot exceed ₹${maxPrice}`;
+                    isPriceValid = false;
+                } else {
+                    priceError.textContent = '';
+                    isPriceValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Distance validation - between 0 and 20 km
+            distFromPlaceInput.addEventListener('input', validateDistance);
+            
+            function validateDistance() {
+                const distance = distFromPlaceInput.value.trim();
+                const maxDistance = 20;
+                
+                if (!distance) {
+                    distanceError.textContent = 'Distance is required';
+                    isDistanceValid = false;
+                } else if (distance < 0) {
+                    distanceError.textContent = 'Distance cannot be negative';
+                    isDistanceValid = false;
+                } else if (distance > maxDistance) {
+                    distanceError.textContent = `Distance cannot exceed ${maxDistance} km`;
+                    isDistanceValid = false;
+                } else {
+                    distanceError.textContent = '';
+                    isDistanceValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Location validation - at least 2 words, each word minimum 3 letters
+            locationInput.addEventListener('input', validateLocation);
+            
+            function validateLocation() {
+                const location = locationInput.value.trim();
+                const words = location.split(/\s+/).filter(word => word.length > 0);
+                
+                if (!location) {
+                    locationError.textContent = 'Address is required';
+                    isLocationValid = false;
+                } else if (words.length < 2) {
+                    locationError.textContent = 'Address must contain at least 2 words';
+                    isLocationValid = false;
+                } else if (words.some(word => word.length < 3)) {
+                    locationError.textContent = 'Each word in address must be at least 3 letters long';
+                    isLocationValid = false;
+                } else {
+                    locationError.textContent = '';
+                    isLocationValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Image validation - only jpg, jpeg, png allowed
+            imagesInput.addEventListener('change', validateImages);
+            
+            function validateImages() {
+                const file = imagesInput.files[0];
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                
+                if (!file) {
+                    imagesError.textContent = 'Image is required';
+                    isImagesValid = false;
+                } else if (!allowedTypes.includes(file.type)) {
+                    imagesError.textContent = 'Only JPG, JPEG, and PNG images are allowed';
+                    isImagesValid = false;
+                } else {
+                    imagesError.textContent = '';
+                    isImagesValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Pincode validation - Telangana pincodes (500xxx to 509xxx)
             pincodeInput.addEventListener('input', validatePincode);
             
             function validatePincode() {
                 const pincode = pincodeInput.value.trim();
-                const pincodeRegex = /^\d{6}$/;
+                const telanganaPincodeRegex = /^5[0-9]{5}$/;
                 
                 if (!pincode) {
                     pincodeError.textContent = 'Pincode is required';
                     isPincodeValid = false;
-                } else if (!pincodeRegex.test(pincode)) {
-                    pincodeError.textContent = 'Please enter a valid 6-digit pincode';
+                } else if (!telanganaPincodeRegex.test(pincode)) {
+                    pincodeError.textContent = 'Please enter a valid Telangana pincode (500xxx to 509xxx)';
                     isPincodeValid = false;
                 } else {
                     pincodeError.textContent = '';
@@ -666,7 +785,9 @@
             
             // Toggle submit button based on validation
             function toggleSubmitButton() {
-                submitBtn.disabled = !(isNameValid && isContactValid && isEmailValid && isPincodeValid);
+                submitBtn.disabled = !(isNameValid && isContactValid && isEmailValid && 
+                                     isPincodeValid && isPriceValid && isDistanceValid && 
+                                     isLocationValid && isImagesValid);
             }
             
             // Validate on form submission
@@ -675,8 +796,14 @@
                 validateContact();
                 validateEmail();
                 validatePincode();
+                validatePrice();
+                validateDistance();
+                validateLocation();
+                validateImages();
                 
-                if (!(isNameValid && isContactValid && isEmailValid && isPincodeValid)) {
+                if (!(isNameValid && isContactValid && isEmailValid && 
+                      isPincodeValid && isPriceValid && isDistanceValid && 
+                      isLocationValid && isImagesValid)) {
                     e.preventDefault();
                 }
             });
@@ -685,6 +812,9 @@
             validateName();
             validateContact();
             validatePincode();
+            validatePrice();
+            validateDistance();
+            validateLocation();
         });
     </script>
 </body>
