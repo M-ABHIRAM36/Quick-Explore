@@ -1673,19 +1673,6 @@ app.post("/driver/cancel-ride/:bookingId", async (req, res) => {
       });
     }
 
-    // Record in user charges history
-    await UserChargesHistory.create({
-      userId: booking.userId,
-      vehicleId: booking.vehicleId,
-      bookingId: booking._id,
-      destination: booking.place,
-      fromDate: booking.pickupDate,
-      toDate: booking.dropoffDate,
-      cancellationFee,
-      cancelledAt: new Date()
-    });
-
-
 console.log("Ride cancelled successfully");
     res.redirect("/driver/customer-details");
   } catch (error) {
