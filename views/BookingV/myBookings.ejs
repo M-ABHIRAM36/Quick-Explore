@@ -165,6 +165,11 @@
     color: var(--success-color);
   }
 
+  .booking-status.completed {
+    background-color: rgba(32, 191, 107, 0.15);
+    color: var(--success-color);
+  }
+
   .booking-status.ongoing {
     background-color: rgba(247, 183, 49, 0.15);
     color: var(--warning-color);
@@ -403,12 +408,17 @@
                   <div class="booking-status cancelled">
                     <i class="fas fa-times-circle me-1"></i> Cancelled
                   </div>
+                  <% if (booking.cancelledBy === "driver") { %>
+                    <p class="text-danger mt-3"><i class="fas fa-exclamation-circle me-2"></i>This booking was cancelled by the driver. A cancellation fee of ₹<%= booking.cancellationFee || 0 %> has been charged.</p>
+                  <% } else { %>
+                    <!-- <p class="text-danger mt-3"><i class="fas fa-info-circle me-2"></i>This booking was cancelled. No further modifications allowed.</p> -->
+                  <% } %>
                 <% } else if (booking.vehicleStatus === "Booked") { %>
                   <div class="booking-status booked">
                     <i class="fas fa-check-circle me-1"></i> Booked
                   </div>
                 <% } else { %>
-                  <div class="booking-status">
+                  <div class="booking-status completed">
                     <%= booking.vehicleStatus %>
                   </div>
                 <% } %>
@@ -484,7 +494,7 @@
                   </h6>
                   <form action="/renew-booking/<%= booking._id %>" method="POST" class="d-flex gap-2 align-items-center">
                     <div class="flex-grow-1">
-                      <input type="number" class="form-control" name="additionalDays" id="additionalDays" min="1" placeholder="Number of days" required>
+                      <input type="number" class="form-control" name="additionalDays" id="additionalDays" min="1" max="10" placeholder="Number of days (1-10)" required oninput="this.value = Math.abs(Math.floor(this.value))">
                     </div>
                     <button type="submit" class="btn btn-custom btn-extend">
                       <i class="fas fa-plus me-2"></i> Extend
