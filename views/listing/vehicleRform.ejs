@@ -304,7 +304,7 @@
                                     <label class="form-label">Owner Name</label>
                                     <div class="position-relative">
                                         <i class="fas fa-user form-icon"></i>
-                                        <input type="text" name="ownerName" id="ownerName" class="form-control icon-input" placeholder="Enter your full name (5-15 characters, letters only)" required>
+                                        <input type="text" name="ownerName" id="ownerName" class="form-control icon-input" placeholder="Enter your full name (3-15 characters, letters only)" required>
                                         <small id="ownerNameError" class="form-text text-danger"></small>
                                     </div>
                                 </div>
@@ -593,6 +593,11 @@
             const modelInput = document.getElementById('model');
             const regNumberInput = document.getElementById('regNumber');
             const pincodeInput = document.getElementById('pincode');
+            const priceInput = document.querySelector('input[name="rentalPricePerDay"]');
+            const locationInput = document.querySelector('input[name="location"]');
+            const availableFromInput = document.querySelector('input[name="availableFrom"]');
+            const availableToInput = document.querySelector('input[name="availableTo"]');
+            const imagesInput = document.querySelector('input[name="images"]');
             const submitBtn = document.getElementById('submitBtn');
             
             // Error elements
@@ -604,6 +609,27 @@
             const regNumberError = document.getElementById('regNumberError');
             const pincodeError = document.getElementById('pincodeError');
             
+            // Create new error elements
+            const priceError = document.createElement('small');
+            priceError.className = 'form-text text-danger';
+            priceInput.parentNode.appendChild(priceError);
+            
+            const locationError = document.createElement('small');
+            locationError.className = 'form-text text-danger';
+            locationInput.parentNode.appendChild(locationError);
+            
+            const availableFromError = document.createElement('small');
+            availableFromError.className = 'form-text text-danger';
+            availableFromInput.parentNode.appendChild(availableFromError);
+            
+            const availableToError = document.createElement('small');
+            availableToError.className = 'form-text text-danger';
+            availableToInput.parentNode.appendChild(availableToError);
+            
+            const imagesError = document.createElement('small');
+            imagesError.className = 'form-text text-danger';
+            imagesInput.parentNode.appendChild(imagesError);
+            
             // Validation flags
             let isNameValid = false;
             let isContactValid = false;
@@ -612,13 +638,156 @@
             let isModelValid = false;
             let isRegNumberValid = false;
             let isPincodeValid = false;
+            let isPriceValid = false;
+            let isLocationValid = false;
+            let isAvailableFromValid = false;
+            let isAvailableToValid = false;
+            let isImagesValid = false;
+            
+            // Price validation - between 1000 and 250000
+            priceInput.addEventListener('input', validatePrice);
+            
+            function validatePrice() {
+                const price = priceInput.value.trim();
+                const minPrice = 1000;
+                const maxPrice = 250000;
+                
+                if (!price) {
+                    priceError.textContent = 'Price is required';
+                    isPriceValid = false;
+                } else if (price < minPrice) {
+                    priceError.textContent = `Price must be at least ₹${minPrice}`;
+                    isPriceValid = false;
+                } else if (price > maxPrice) {
+                    priceError.textContent = `Price cannot exceed ₹${maxPrice}`;
+                    isPriceValid = false;
+                } else {
+                    priceError.textContent = '';
+                    isPriceValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Location validation - at least 2 words, each word minimum 3 letters
+            locationInput.addEventListener('input', validateLocation);
+            
+            function validateLocation() {
+                const location = locationInput.value.trim();
+                const words = location.split(/\s+/).filter(word => word.length > 0);
+                
+                if (!location) {
+                    locationError.textContent = 'Address is required';
+                    isLocationValid = false;
+                } else if (words.length < 2) {
+                    locationError.textContent = 'Address must contain at least 2 words';
+                    isLocationValid = false;
+                } else if (words.some(word => word.length < 3)) {
+                    locationError.textContent = 'Each word in address must be at least 3 letters long';
+                    isLocationValid = false;
+                } else {
+                    locationError.textContent = '';
+                    isLocationValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Pincode validation - Telangana pincodes (500xxx to 509xxx)
+            pincodeInput.addEventListener('input', validatePincode);
+            
+            function validatePincode() {
+                const pincode = pincodeInput.value.trim();
+                const telanganaPincodeRegex = /^5[0-9]{5}$/;
+                
+                if (!pincode) {
+                    pincodeError.textContent = 'Pincode is required';
+                    isPincodeValid = false;
+                } else if (!telanganaPincodeRegex.test(pincode)) {
+                    pincodeError.textContent = 'Please enter a valid Telangana pincode (500xxx to 509xxx)';
+                    isPincodeValid = false;
+                } else {
+                    pincodeError.textContent = '';
+                    isPincodeValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Available dates validation
+            availableFromInput.addEventListener('change', validateAvailableDates);
+            availableToInput.addEventListener('change', validateAvailableDates);
+            
+            function validateAvailableDates() {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const fromDate = new Date(availableFromInput.value);
+                const toDate = new Date(availableToInput.value);
+                
+                const oneYearFromNow = new Date();
+                oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+                
+                // Validate Available From date
+                if (!availableFromInput.value) {
+                    availableFromError.textContent = 'Available from date is required';
+                    isAvailableFromValid = false;
+                } else if (fromDate < today) {
+                    availableFromError.textContent = 'Available from date cannot be before today';
+                    isAvailableFromValid = false;
+                } else if (fromDate > oneYearFromNow) {
+                    availableFromError.textContent = 'Available from date cannot be more than 1 year from now';
+                    isAvailableFromValid = false;
+                } else {
+                    availableFromError.textContent = '';
+                    isAvailableFromValid = true;
+                }
+                
+                // Validate Available To date
+                if (!availableToInput.value) {
+                    availableToError.textContent = 'Available to date is required';
+                    isAvailableToValid = false;
+                } else if (toDate < fromDate) {
+                    availableToError.textContent = 'Available to date cannot be before available from date';
+                    isAvailableToValid = false;
+                } else if (toDate > oneYearFromNow) {
+                    availableToError.textContent = 'Available to date cannot be more than 1 year from now';
+                    isAvailableToValid = false;
+                } else {
+                    availableToError.textContent = '';
+                    isAvailableToValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
+            
+            // Image validation - only jpg, jpeg, png allowed
+            imagesInput.addEventListener('change', validateImages);
+            
+            function validateImages() {
+                const file = imagesInput.files[0];
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                
+                if (!file) {
+                    imagesError.textContent = 'Image is required';
+                    isImagesValid = false;
+                } else if (!allowedTypes.includes(file.type)) {
+                    imagesError.textContent = 'Only JPG, JPEG, and PNG images are allowed';
+                    isImagesValid = false;
+                } else {
+                    imagesError.textContent = '';
+                    isImagesValid = true;
+                }
+                
+                toggleSubmitButton();
+            }
             
             // Name validation - 5-15 characters, only letters
             ownerNameInput.addEventListener('input', validateName);
             
             function validateName() {
                 const name = ownerNameInput.value.trim();
-                const nameRegex = /^[a-zA-Z ]{5,15}$/;
+                const nameRegex = /^[a-zA-Z ]{3,15}$/;
                 
                 if (!name) {
                     ownerNameError.textContent = 'Name is required';
@@ -741,32 +910,12 @@
                 toggleSubmitButton();
             }
             
-            // Pincode validation - 6 digits only
-            pincodeInput.addEventListener('input', validatePincode);
-            
-            function validatePincode() {
-                const pincode = pincodeInput.value.trim();
-                const pincodeRegex = /^\d{6}$/;
-                
-                if (!pincode) {
-                    pincodeError.textContent = 'Pincode is required';
-                    isPincodeValid = false;
-                } else if (!pincodeRegex.test(pincode)) {
-                    pincodeError.textContent = 'Please enter a valid 6-digit pincode';
-                    isPincodeValid = false;
-                } else {
-                    pincodeError.textContent = '';
-                    isPincodeValid = true;
-                }
-                
-                toggleSubmitButton();
-            }
-            
             // Toggle submit button based on validation
             function toggleSubmitButton() {
                 submitBtn.disabled = !(isNameValid && isContactValid && isEmailValid && 
                                      isBrandValid && isModelValid && isRegNumberValid && 
-                                     isPincodeValid);
+                                     isPincodeValid && isPriceValid && isLocationValid && 
+                                     isAvailableFromValid && isAvailableToValid && isImagesValid);
             }
             
             // Validate on form submission
@@ -778,10 +927,15 @@
                 validateModel();
                 validateRegNumber();
                 validatePincode();
+                validatePrice();
+                validateLocation();
+                validateAvailableDates();
+                validateImages();
                 
                 if (!(isNameValid && isContactValid && isEmailValid && 
                      isBrandValid && isModelValid && isRegNumberValid && 
-                     isPincodeValid)) {
+                     isPincodeValid && isPriceValid && isLocationValid && 
+                     isAvailableFromValid && isAvailableToValid && isImagesValid)) {
                     e.preventDefault();
                 }
             });
@@ -789,10 +943,14 @@
             // Initialize validation on page load
             validateName();
             validateContact();
+            validateEmail();
             validateBrand();
             validateModel();
             validateRegNumber();
             validatePincode();
+            validatePrice();
+            validateLocation();
+            validateAvailableDates();
         });
     </script>
 </body>
