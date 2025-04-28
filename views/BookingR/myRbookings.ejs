@@ -317,7 +317,7 @@
                 let timeDifference = (currentTime - bookingTime) / (1000 * 60); // in minutes
                 
                 let statusClass = "";
-                if (booking.rentalStatus === "Cancelled") {
+                if (booking.status === "Cancelled") {
                     statusClass = "status-cancelled";
                 } else if (booking.status === "Ongoing") {
                     statusClass = "status-ongoing";
@@ -374,7 +374,7 @@
                                         <i class="fas fa-info-circle"></i>Status
                                     </div>
                                     <div class="status-badge <%= statusClass %>">
-                                        <% if (booking.rentalStatus === "Cancelled") { %>
+                                        <% if (booking.status === "Cancelled") { %>
                                             <i class="fas fa-times-circle me-2"></i>Booking Cancelled
                                         <% } else { %>
                                             <i class="fas fa-check-circle me-2"></i><%= booking.status %>
@@ -391,7 +391,7 @@
                                         <i class="fas fa-ban me-2"></i>Cancel Booking
                                     </button>
                                 </form>
-                            <% } else if (booking.rentalStatus === "Cancelled") { %>
+                            <% } else if (booking.status === "Cancelled") { %>
                                 <div class="alert alert-light mt-3 border">
                                     <i class="fas fa-info-circle me-2 text-muted"></i>
                                     <span class="text-muted">Booking has been cancelled. No further changes allowed.</span>
@@ -409,7 +409,8 @@
                                 <form action="/renew-rental/<%= booking._id %>" method="POST" class="mt-4">
                                     <div class="d-flex align-items-center flex-wrap mb-3">
                                         <label for="additionalDays<%= index %>" class="me-2">Extend stay by:</label>
-                                        <input type="number" name="additionalDays" id="additionalDays<%= index %>" min="1" required class="days-input">
+                                        <!-- <input type="number" name="additionalDays" id="additionalDays<%= index %>" min="1" required class="days-input"> -->
+                                        <input type="number" class="form-control" name="additionalDays" id="additionalDays" min="1" max="10" placeholder="Number of days (1-10)" required oninput="this.value = Math.abs(Math.floor(this.value))">
                                         <span>days</span>
                                     </div>
                                     <button type="submit" class="btn btn-custom btn-renew">
