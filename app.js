@@ -563,6 +563,7 @@ app.get("/my-bookings", requireLogin, async (req, res) => {
           vehicle: vehicle ? vehicle.toObject() : null,
           driver: driver ? driver.toObject() : null,
           image: vehicle?.images?.[0] || "/default-car.jpg",
+          cancelledBy: booking.cancelledBy || null, // 👈 Add 
         };
       })
     );
@@ -623,6 +624,7 @@ app.post("/cancel-booking/:bookingId", async (req, res) => {
 
     booking.vehicleStatus = "Cancelled";
     booking.cancellationFee = cancellationFee;
+    booking.cancelledBy = "driver";
     await booking.save();
 
     await VehicleRequest.findByIdAndUpdate(booking.vehicleId, { bookingStatus: "Available" });
@@ -1371,6 +1373,61 @@ app.post("/owner/complete-booking/:bookingId", requireOwnerLogin, async (req, re
   }
 });
 
+// POST: Cancel Rental Booking by Owner
+app.post("/owner/cancel-booking/:bookingId", requireOwnerLogin, async (req, res) => {
+  const { bookingId } = req.params;
+
+  try {
+    const booking = await RentalBooking.findById(bookingId);
+    if (!booking) {
+      return res.render("errors/appError.ejs", { error: "Booking not found." });
+    }
+
+    // Calculate cancellation fee based on time difference
+    const checkInDate = new Date(booking.checkInDate);
+    const now = new Date();
+    const timeDifference = Math.abs(checkInDate - now) / (1000 * 60); // in minutes
+
+    let cancellationFee = 0;
+    if (timeDifference > 20 && timeDifference <= 1440) { // Between 20 minutes and 24 hours
+      cancellationFee = booking.totalAmount * 0.10; // 10% of total amount
+    } else if (timeDifference > 1440) { // More than 24 hours
+      const rental = await rentalRequest.findById(booking.rentalId);
+      cancellationFee = rental?.price || 0; // One day's rent
+    }
+
+    // Update booking status
+    booking.status = "Cancelled";
+    booking.cancellationFee = cancellationFee;
+    booking.cancelledBy = "owner";
+    await booking.save();
+
+    // Update rental status
+    await rentalRequest.findByIdAndUpdate(booking.rentalId, {
+      bookingStatus: "Available"
+    });
+
+    // Record in user charges history
+    if (cancellationFee > 0) {
+      await UserRentalChargesHistory.create({
+        userId: booking.userId,
+        rentalId: booking.rentalId,
+        bookingId: booking._id,
+        destination: booking.place,
+        fromDate: booking.checkInDate,
+        toDate: booking.checkOutDate,
+        cancellationFee,
+        cancelledAt: new Date()
+      });
+    }
+
+    res.redirect("/owner/customer-details");
+  } catch (err) {
+    console.error("Error cancelling rental booking:", err);
+    res.render("errors/appError.ejs", { error: "Failed to cancel the booking. Please try again." });
+  }
+});
+
 
 // ========================= DRIVER PROFILE =========================
 
@@ -1559,6 +1616,83 @@ app.get("/quickexploreDFDd2",isAuthenticated, (req, res) => {
 app.get("/quickexploreSA",isAuthenticated, (req, res) => {
   res.render("docsqe/QuickExplore_Architecture");
 })
+
+
+
+
+// 🚗 Cancel ride by driver
+app.post("/driver/cancel-ride/:bookingId", async (req, res) => {
+  try {
+    console.log("Cancelling ride...");
+    const { bookingId } = req.params;
+    
+    const booking = await Booking.findById(bookingId);
+    console.log("Booking found:", booking);
+
+    if (!booking) {
+      return res.render("errors/appError.ejs", { error: "Booking not found" });
+    }
+
+    if (!booking.driverId) {
+      return res.render("errors/appError.ejs", { error: "No driver assigned to this booking" });
+    }
+
+    // Calculate cancellation fee based on time difference
+    const pickupDate = new Date(booking.pickupDate);
+    const now = new Date();
+    const timeDifference = Math.abs(pickupDate - now) / (1000 * 60); // in minutes
+
+    let cancellationFee = 0;
+    if (timeDifference > 20 && timeDifference <= 1440) { // Between 20 minutes and 24 hours
+      cancellationFee = booking.totalAmount * 0.10; // 10% of total amount
+    } else if (timeDifference > 1440) { // More than 24 hours
+      const vehicle = await VehicleRequest.findById(booking.vehicleId);
+      cancellationFee = vehicle?.rentalPricePerDay || 0; // One day's rent
+    }
+
+    // Update booking status
+    booking.vehicleStatus = "Cancelled";
+    
+    booking.cancelledBy = "driver";
+    await booking.save();
+
+    // Update vehicle status
+    await VehicleRequest.findByIdAndUpdate(booking.vehicleId, { 
+      bookingStatus: "Available",
+    });
+
+
+
+    // Record transaction if there's a cancellation fee
+    if (cancellationFee > 0) {
+      await Transaction.create({
+        userId: booking.userId,
+        vehicleId: booking.vehicleId,
+        amount: cancellationFee,
+        type: "Cancellation Fee"
+      });
+    }
+
+    // Record in user charges history
+    await UserChargesHistory.create({
+      userId: booking.userId,
+      vehicleId: booking.vehicleId,
+      bookingId: booking._id,
+      destination: booking.place,
+      fromDate: booking.pickupDate,
+      toDate: booking.dropoffDate,
+      cancellationFee,
+      cancelledAt: new Date()
+    });
+
+
+console.log("Ride cancelled successfully");
+    res.redirect("/driver/customer-details");
+  } catch (error) {
+    console.error("Error canceling ride:", error);
+    res.render("errors/appError.ejs", { error: error.message });
+  }
+});
 
 
 // Catch-all route for undefined routes (404 - Not Found)
