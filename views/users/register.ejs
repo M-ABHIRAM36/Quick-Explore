@@ -231,7 +231,7 @@
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
                         <i class="fas fa-user form-icon"></i>
-                        <input type="text" name="username" id="username" class="form-control" placeholder="Choose a username (5-15 characters, letters and hyphens only)" required>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Choose a username (3-15 characters, letters and hyphens only)" required>
                         <small id="usernameError" class="form-text text-danger"></small>
                     </div>
                     
@@ -323,13 +323,13 @@
             
             function validateUsername() {
                 const username = usernameInput.value.trim();
-                const usernameRegex = /^[a-zA-Z-]{5,15}$/;
+                const usernameRegex = /^[a-zA-Z-]{3,15}$/;
                 
                 if (!username) {
                     usernameError.textContent = 'Username is required';
                     isUsernameValid = false;
                 } else if (!usernameRegex.test(username)) {
-                    usernameError.textContent = 'Username must be 5-15 characters and contain only letters and hyphens';
+                    usernameError.textContent = 'Username must be 3-15 characters and contain only letters and hyphens';
                     isUsernameValid = false;
                 } else {
                     usernameError.textContent = '';
