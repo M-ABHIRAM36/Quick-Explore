@@ -951,18 +951,25 @@ Quick-Explore/
 
 ## 📸 Screenshots
 
-> Add screenshots of your application here:
+> screenshots of my application are:
 
 | Page | Screenshot |
 |------|-----------|
-| Landing / Splash | _Add screenshot_ |
-| Places Listing | _Add screenshot_ |
-| Vehicle Booking | _Add screenshot_ |
-| Rental Booking | _Add screenshot_ |
-| My Bookings | _Add screenshot_ |
-| Admin Dashboard | _Add screenshot_ |
-| Driver Dashboard | _Add screenshot_ |
-| Owner Dashboard | _Add screenshot_ |
+| Landing / Splash | <img width="1916" height="967" alt="image" src="https://github.com/user-attachments/assets/45ba2580-41af-4092-997e-1f5e69cd0113" />|
+| Places Listing | <img width="1919" height="1031" alt="image" src="https://github.com/user-attachments/assets/68df16ad-a56c-495f-b98f-9a7985a2f0c0" />|
+| Places Listing | <img width="1919" height="919" alt="image" src="https://github.com/user-attachments/assets/45aae212-0ee9-4ab8-ae6f-1a7787888656" />|
+| Vehicle Booking | <img width="1906" height="959" alt="image" src="https://github.com/user-attachments/assets/920121e0-2134-4fae-9ff7-e7b6ef559854" />|
+| Rental Booking | <img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/dbca0572-fc0d-47f9-abb8-ca550b4c0757" />|
+| My Bookings | <img width="1917" height="968" alt="image" src="https://github.com/user-attachments/assets/55cdb1c4-cf1c-4d23-8f39-136e656aed80" />|
+| My Bookings | <img width="1919" height="974" alt="image" src="https://github.com/user-attachments/assets/6cf1dc1c-8864-4821-9064-b4977159fb3f" />|
+| Admin Dashboard | <img width="1915" height="971" alt="image" src="https://github.com/user-attachments/assets/df701833-decb-47a0-9449-1fa7fa7af83d" />|
+| Admin Dashboard | <img width="1919" height="974" alt="image" src="https://github.com/user-attachments/assets/b58d3c02-d402-4333-993d-9bc1fa9574ac" />|
+| Admin Dashboard | <img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/1391681a-d29e-45f7-876b-62c95a81a93c" />|
+| Admin Dashboard | <img width="828" height="619" alt="image" src="https://github.com/user-attachments/assets/a82289de-d0d6-43a8-bdd3-614260bc61af" />|
+| Admin Dashboard | <img width="1919" height="914" alt="image" src="https://github.com/user-attachments/assets/6b0154b2-3b98-415a-8f3d-a36fa6961c2b" />|
+| Admin Dashboard | <img width="1913" height="975" alt="image" src="https://github.com/user-attachments/assets/68fc6c43-b202-4b47-88ad-20bf2b5425da" />|
+| Driver Dashboard | <img width="1910" height="965" alt="image" src="https://github.com/user-attachments/assets/6ea5c112-9cf4-4cce-8c3f-93c3061e654f" />|
+| Owner Dashboard | <img width="1918" height="969" alt="image" src="https://github.com/user-attachments/assets/e7e0862a-3f14-4d4e-b065-a36357e1998c" />|
 
 ---
 ## Development Process
